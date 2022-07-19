@@ -1,22 +1,24 @@
-import 'package:basicflutter/screens/report/materials.dart/form-material.dart';
+import 'package:basicflutter/component/list-component.dart';
+import 'package:basicflutter/model/drowing-model.dart';
+
+import 'package:basicflutter/screens/insught/drawing/display-drowing.dart';
 import 'package:flutter/material.dart';
 import '../../ProgressHUD.dart';
-import '../../component/list-component.dart';
-import '../../model/materials-model.dart';
 import '../../service/api-service.dart';
 
-class ReportMaterials extends StatefulWidget {
-  const ReportMaterials({Key? key}) : super(key: key);
+class InsightDrowing extends StatefulWidget {
+  const InsightDrowing({Key? key}) : super(key: key);
 
   @override
-  State<ReportMaterials> createState() => _ReportMaterialsState();
+  State<InsightDrowing> createState() => _InsightDrowingState();
 }
 
-class _ReportMaterialsState extends State<ReportMaterials> {
+class _InsightDrowingState extends State<InsightDrowing> {
   APIService apiService = APIService();
-  List<MaterialModel> materials = [];
+  List<DrawModel> draws = [];
   bool isApiCallProcess = false;
-  int project_id = 10;
+  int projectId = 10;
+  int typeID = 10;
   @override
   void initState() {
     // TODO: implement initState
@@ -24,9 +26,9 @@ class _ReportMaterialsState extends State<ReportMaterials> {
     setState(() {
       isApiCallProcess = true;
     });
-    apiService.getListMaterials(project_id).then((value) {
+    apiService.getListDraws().then((value) {
       setState(() {
-        materials = value.materials;
+        draws = value.drows;
         isApiCallProcess = false;
       });
     });
@@ -40,18 +42,18 @@ class _ReportMaterialsState extends State<ReportMaterials> {
   Widget _uiSetup(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Report Materials'),
+        title: const Text('Insight Drawing Status'),
       ),
       body: Container(
         margin: const EdgeInsets.all(5),
         color: Colors.white70,
         child: ListView.builder(
-          itemCount: materials.length,
+          itemCount: draws.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
                 height: MediaQuery.of(context).size.height * 0.115,
                 child: ListCard(
-                    title: materials[index].name,
+                    title: draws[index].name,
                     function: () {
                       click(index);
                     }));
@@ -64,8 +66,7 @@ class _ReportMaterialsState extends State<ReportMaterials> {
   void click(int index) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => FormMaterial(materials[index].id)),
+      MaterialPageRoute(builder: (context) => DisplayDrawing(disciplineId:draws[index].id)),
     );
   }
 }

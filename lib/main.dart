@@ -1,9 +1,11 @@
 import 'package:basicflutter/screens/documant/document-daily.dart';
 import 'package:basicflutter/screens/insught/Insight-materials.dart';
 import 'package:basicflutter/component/test.dart';
+import 'package:basicflutter/screens/insught/insight-drowing.dart';
 import 'package:basicflutter/screens/insught/insight-manpower.dart';
 import 'package:basicflutter/screens/loginPage.dart';
 import 'package:basicflutter/screens/mymain.dart';
+import 'package:basicflutter/screens/report/daily/gallery.dart';
 import 'package:basicflutter/screens/report/report-daily.dart';
 import 'package:basicflutter/screens/report/report-manpower.dart';
 import 'package:basicflutter/screens/report/report-materials.dart';
@@ -41,6 +43,7 @@ class MyApp extends StatelessWidget {
         "/ReportMaterials": (BuildContext context) => const ReportMaterials(),
         "/ReportManpower": (BuildContext context) => const ReportManpower(),
         "/ReportDaily": (BuildContext context) => const ReportDaily(),
+        "/Drawing":(BuildContext context) => const InsightDrowing(),
       },
     );
   }

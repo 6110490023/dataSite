@@ -1,37 +1,38 @@
-import 'package:basicflutter/component/chartBar-conponent.dart';
-import 'package:basicflutter/component/chartLine-conponent.dart';
-import 'package:basicflutter/model/chart-model.dart';
 import 'package:flutter/material.dart';
-import '../../ProgressHUD.dart';
-import '../../model/chartManPower-model.dart';
-import '../../service/api-service.dart';
+import '../../../ProgressHUD.dart';
+import '../../../component/chartBar-conponent.dart';
+import '../../../component/chartLine-conponent.dart';
+import '../../../model/chart-model.dart';
+import '../../../model/chartMaterial-model.dart';
+import '../../../service/api-service.dart';
 
-class InsightManpower extends StatefulWidget {
-  const InsightManpower({Key? key}) : super(key: key);
+class ChartMaterial extends StatefulWidget {
+  final int materialId;
+  const ChartMaterial(this.materialId, {Key? key}) : super(key: key);
 
   @override
-  State<InsightManpower> createState() => _InsightManpowerState();
+  State<ChartMaterial> createState() => _ChartMaterialState();
 }
 
-class _InsightManpowerState extends State<InsightManpower> {
+class _ChartMaterialState extends State<ChartMaterial> {
   bool isApiCallProcess = false;
   APIService apiService = APIService();
-  ChartManpowerResponseModel charts = ChartManpowerResponseModel(
+  ChartMaterialResponseModel charts = ChartMaterialResponseModel(
     chartBar: [ChartModel(lable: "", plan: 1000.0, actuality: 0.0)],
     chartLine: [ChartModel(lable: "", plan: 1500.0, actuality: 0.0)],
     barMaxY: 1000.0,
     lineMaxY: 1000.0,
     error: '',
   );
-  final int projectId = 10;
+  final int project_id = 10;
   @override
-  void initState() {
+  void initState(){
     // TODO: implement initState
     super.initState();
     setState(() {
       isApiCallProcess = true;
     });
-    apiService.getManPowerChart(projectId).then((value) {
+    apiService.getMaterialsChart(project_id, widget.materialId).then((value){
       setState(() {
         charts = value;
         isApiCallProcess = false;
@@ -47,7 +48,7 @@ class _InsightManpowerState extends State<InsightManpower> {
   Widget _uiSetup(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Insight Manpower'),
+        title: const Text('Materials'),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,10 +59,7 @@ class _InsightManpowerState extends State<InsightManpower> {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.35,
             width: MediaQuery.of(context).size.width * 0.95,
-            child: ChartLine(
-                charts: charts.chartBar,
-                MaxY: charts.barMaxY,
-                inAsyncCall: isApiCallProcess),
+            child: ChartLine(charts: charts.chartBar, MaxY: charts.barMaxY , inAsyncCall: isApiCallProcess),
           ),
           SizedBox(
             height: 30,
@@ -69,10 +67,7 @@ class _InsightManpowerState extends State<InsightManpower> {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.35,
             width: MediaQuery.of(context).size.width * 0.95,
-            child: ChartBar(
-                charts: charts.chartBar,
-                MaxY: charts.barMaxY,
-                inAsyncCall: isApiCallProcess),
+            child: ChartBar(charts: charts.chartBar, MaxY: charts.barMaxY , inAsyncCall: isApiCallProcess),
           ),
         ],
       ),

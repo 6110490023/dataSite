@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 
-class ReportDaily extends StatefulWidget {
-  const ReportDaily({Key? key}) : super(key: key);
+class FormMaterial extends StatefulWidget {
+  final int materialId;
+  const FormMaterial(this.materialId,{Key? key}) : super(key: key);
 
   @override
-  State<ReportDaily> createState() => _ReportDailyState();
+  State<FormMaterial> createState() => _FormMaterialState();
 }
 
-class _ReportDailyState extends State<ReportDaily> {
+class _FormMaterialState extends State<FormMaterial> {
   final _formkey = GlobalKey<FormState>();
   DateTime date = DateTime.now();
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Center(
-          child: Text('Dail Report'),
+          child: Text('Report Materails'),
         ),
       ),
       body: Container(
@@ -26,18 +27,6 @@ class _ReportDailyState extends State<ReportDaily> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               FormCustom(),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/Gallery');
-                      },
-                      child: Icon(Icons.camera_alt),
-                    ),
-                  ),
-                ],
-              ),
               Row(
                 children: [
                   Expanded(
@@ -70,41 +59,6 @@ class _ReportDailyState extends State<ReportDaily> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: Text("Date"),
-              ),
-              Expanded(
-                flex: 10,
-                child: SizedBox(
-                    height: 50,
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child:
-                                Text('${date.year}/${date.month}/${date.day}')),
-                        ElevatedButton(
-                            onPressed: () async {
-                              DateTime? newDate = await showDatePicker(
-                                context: context,
-                                initialDate: date,
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime(2100),
-                              );
-                              if (newDate == null) return;
-                              setState(() {
-                                date = newDate;
-                              });
-                            },
-                            child: Icon(Icons.date_range)),
-                      ],
-                    )),
-              )
-            ],
-          ),
-          SizedBox(height: 10),
           Row(
             children: [
               Expanded(
@@ -185,14 +139,11 @@ class _ReportDailyState extends State<ReportDaily> {
             ],
           ),
           SizedBox(height: 10),
-          Row(
+          Text("concrets Spe cification"),
+          SizedBox(height: 10),
+                    Row(
             children: [
               Expanded(
-                flex: 3,
-                child: Text("category"),
-              ),
-              Expanded(
-                  flex: 10,
                   child: SizedBox(
                     height: 50,
                     child: DropdownButtonFormField(
@@ -229,49 +180,46 @@ class _ReportDailyState extends State<ReportDaily> {
             children: [
               Expanded(
                 flex: 3,
-                child: Text("category"),
+                child: Text("Date"),
               ),
               Expanded(
-                  flex: 10,
-                  child: SizedBox(
+                flex: 10,
+                child: SizedBox(
                     height: 50,
-                    child: DropdownButtonFormField(
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey[100],
-                      ),
-                      validator: (value) =>
-                          value == null ? "Select a country" : null,
-                      dropdownColor: Colors.grey[100],
-                      value: selectedValue,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedValue = newValue!;
-                        });
-                        print(selectedValue);
-                      },
-                      items: categoryItems,
-                    ),
-                  ))
+                    child: Row(
+                      children: [
+                        Expanded(child: Text('${date.year}/${date.month}/${date.day}')),
+                        
+                        ElevatedButton(
+                          onPressed: () async{
+                            DateTime? newDate = await showDatePicker(
+                            context: context,
+                            initialDate: date,
+                            firstDate: DateTime(1900), 
+                            lastDate: DateTime(2100),);
+                          if(newDate ==null) return;
+                          setState(() {
+                            date = newDate;
+                          });
+                          print("55555");
+                          }, 
+                          child: Icon(Icons.date_range)),
+                      ],
+                    )),
+              )
             ],
           ),
-          SizedBox(height: 10),
-          Text("data"),
           SizedBox(height: 10),
           Row(
             children: [
               Expanded(
+                flex: 4,
+                child: Text("Volume (CUM)"),
+              ),
+              Expanded(
+                flex: 9,
                 child: TextFormField(
-                  keyboardType: TextInputType.multiline,
+                  keyboardType: TextInputType.number,
                 ),
               ),
             ],
@@ -282,3 +230,4 @@ class _ReportDailyState extends State<ReportDaily> {
     ));
   }
 }
+
