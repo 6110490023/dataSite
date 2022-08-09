@@ -91,7 +91,7 @@ class _FormMaterialState extends State<FormMaterial> {
                         setState(() {
                           selectedValue = newValue!;
                         });
-                        print(selectedValue);
+                       
                       },
                       items: categoryItems,
                     ),
@@ -131,7 +131,7 @@ class _FormMaterialState extends State<FormMaterial> {
                         setState(() {
                           selectedValue = newValue!;
                         });
-                        print(selectedValue);
+                        
                       },
                       items: categoryItems,
                     ),
@@ -168,7 +168,7 @@ class _FormMaterialState extends State<FormMaterial> {
                         setState(() {
                           selectedValue = newValue!;
                         });
-                        print(selectedValue);
+                        
                       },
                       items: categoryItems,
                     ),
@@ -201,7 +201,7 @@ class _FormMaterialState extends State<FormMaterial> {
                           setState(() {
                             date = newDate;
                           });
-                          print("55555");
+                         
                           }, 
                           child: Icon(Icons.date_range)),
                       ],

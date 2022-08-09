@@ -18,8 +18,8 @@ class _ChartMaterialState extends State<ChartMaterial> {
   bool isApiCallProcess = false;
   APIService apiService = APIService();
   ChartMaterialResponseModel charts = ChartMaterialResponseModel(
-    chartBar: [ChartModel(lable: "", plan: 1000.0, actuality: 0.0)],
-    chartLine: [ChartModel(lable: "", plan: 1500.0, actuality: 0.0)],
+    chartBar: [ChartModel(label: 12.0, plan: 1000.0, actual: 0.0,disciplineName: "")],
+    chartLine: [ChartModel(label: 12.0, plan: 1500.0, actual: 0.0,disciplineName: "")],
     barMaxY: 1000.0,
     lineMaxY: 1000.0,
     error: '',

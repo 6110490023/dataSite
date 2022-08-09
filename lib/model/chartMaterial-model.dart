@@ -4,12 +4,12 @@ Response from web
 --------------------------------------------
  {
   chartLine:[
-    {'lable': 'a','plan': 1000,'actuality': 1000},
-    {lable: "a",plan: 1000,actuality: 1000}
+    {'label': 'a','plan': 1000,'actuality': 1000},
+    {label: "a",plan: 1000,actuality: 1000}
   ],
   chartBar: [
-    {lable: "a",plan: 1000,actuality: 1000},
-    {lable: "a",plan: 1000,actuality: 1000},
+    {label: "a",plan: 1000,actuality: 1000},
+    {label: "a",plan: 1000,actuality: 1000},
   ]
  }
 ---------------------------------------------
@@ -43,8 +43,8 @@ class ChartMaterialResponseModel {
     if (json["chartLine"] != null) {
       json["chartLine"].forEach((chart) {
         ChartModel chartModel = ChartModel.formJson(chart);
-        if (chartModel.actuality > _lineMaxY) {
-          _lineMaxY = chartModel.actuality;
+        if (chartModel.actual > _lineMaxY) {
+          _lineMaxY = chartModel.actual;
         }
         if (chartModel.plan > _lineMaxY) {
           _lineMaxY = chartModel.plan;
@@ -57,8 +57,8 @@ class ChartMaterialResponseModel {
     if (json["chartBar"] != null) {
       json["chartBar"].forEach((chart) {
         ChartModel chartModel = ChartModel.formJson(chart);
-        if (chartModel.actuality > _barMaxY) {
-          _barMaxY = chartModel.actuality;
+        if (chartModel.actual > _barMaxY) {
+          _barMaxY = chartModel.actual;
         }
         if (chartModel.plan > _barMaxY) {
           _barMaxY = chartModel.plan;

@@ -1,7 +1,9 @@
+import 'package:basicflutter/screens/list-project.dart';
 import 'package:flutter/material.dart';
 import 'package:basicflutter/ProgressHUD.dart';
 import 'package:basicflutter/service/api-service.dart';
 import 'package:basicflutter/model/login-model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -10,8 +12,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   bool hidePassword = true;
-  bool isApiCallProcess = false;
+  bool isApiCallProcess = true;
   GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
   LoginRequestModel loginRequestModel = LoginRequestModel();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -19,6 +22,22 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    checkLogin();
+    
+  }
+
+  Future<Null> checkLogin() async {
+    try {
+      final SharedPreferences prefs = await _prefs;
+      int memberId = await prefs.getInt('memberId') ?? -1;
+      if (memberId != -1) {
+        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+      }
+
+    } catch (e) {}
+    setState(() {
+      isApiCallProcess = false;
+    });
   }
 
   @override
@@ -125,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         onPressed: () {
                           if (validateAndSave()) {
-                            print(loginRequestModel.toJson());
+                            
 
                             setState(() {
                               isApiCallProcess = true;
@@ -138,15 +157,15 @@ class _LoginPageState extends State<LoginPage> {
                                   isApiCallProcess = false;
                                 });
 
-                                if (value.token.isNotEmpty) {
-                                  if(value.token.length>1){
-                                    print("test");
-                                  }
-                            
-                                  Navigator.pushNamedAndRemoveUntil(
-                                      context, '/', (route) => false);
-                                }
-                                else {
+                                if (value.canLogin) {
+                                
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ListProject(
+                                              loginResponse: value)),
+                                      (route) => false);
+                                } else {
                                   final snackBar =
                                       SnackBar(content: Text(value.error));
                                   ScaffoldMessenger.of(context)
@@ -162,15 +181,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       SizedBox(height: 15),
-                      Container(
-                          margin: const EdgeInsets.only(top: 26.0),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushNamedAndRemoveUntil(
-                                  context, '/', (route) => false);
-                            },
-                            child: Text('CONTAINED BUTTON'),
-                          )),
                     ],
                   ),
                 ),

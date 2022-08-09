@@ -1,15 +1,17 @@
 class ChartModel {
-  final String lable;
+  final double label;
   final double plan;
-  final double actuality;
+  final double actual;
+  final String disciplineName;
 
   ChartModel(
-      {required this.lable, required this.plan, required this.actuality});
+      {required this.label, required this.plan, required this.actual ,required this.disciplineName});
 
   factory ChartModel.formJson(Map<String, dynamic> json) {
     return ChartModel(
-        lable: json["lable"] != null ? json["lable"] : "",
+        disciplineName: json["disciplineName"] ?? "",
+        label: json["label"]!= null ? json["label"].toDouble() : 0.0, 
         plan: json["plan"] != null ? json["plan"].toDouble() : 0.0,
-        actuality: json["actuality"] != null ? json["actuality"].toDouble() : 0.0);
+        actual: json["actual"] != null ? json["actual"].toDouble() : 0.0);
   }
 }

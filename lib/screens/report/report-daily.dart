@@ -137,7 +137,7 @@ class _ReportDailyState extends State<ReportDaily> {
                         setState(() {
                           selectedValue = newValue!;
                         });
-                        print(selectedValue);
+                      
                       },
                       items: categoryItems,
                     ),
@@ -177,7 +177,7 @@ class _ReportDailyState extends State<ReportDaily> {
                         setState(() {
                           selectedValue = newValue!;
                         });
-                        print(selectedValue);
+                        
                       },
                       items: categoryItems,
                     ),
@@ -217,7 +217,7 @@ class _ReportDailyState extends State<ReportDaily> {
                         setState(() {
                           selectedValue = newValue!;
                         });
-                        print(selectedValue);
+                        
                       },
                       items: categoryItems,
                     ),
@@ -257,7 +257,6 @@ class _ReportDailyState extends State<ReportDaily> {
                         setState(() {
                           selectedValue = newValue!;
                         });
-                        print(selectedValue);
                       },
                       items: categoryItems,
                     ),

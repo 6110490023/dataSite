@@ -133,7 +133,7 @@ class _ReportManpowerState extends State<ReportManpower> {
                         setState(() {
                           selectedValue = newValue!;
                         });
-                        print(selectedValue);
+                      
                       },
                       items: categoryItems,
                     ),
@@ -173,7 +173,7 @@ class _ReportManpowerState extends State<ReportManpower> {
                         setState(() {
                           selectedValue = newValue!;
                         });
-                        print(selectedValue);
+                        
                       },
                       items: categoryItems,
                     ),
@@ -206,7 +206,7 @@ class _ReportManpowerState extends State<ReportManpower> {
                           setState(() {
                             date = newDate;
                           });
-                          print("55555");
+                         
                           }, 
                           child: Icon(Icons.date_range)),
                       ],

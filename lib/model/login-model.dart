@@ -1,12 +1,14 @@
 class LoginResponseModel {
-  final String token;
+  final bool canLogin;
+  final List<dynamic> project;
   final String error;
 
-  LoginResponseModel({required this.token,required this.error});
+  LoginResponseModel({required this.canLogin,required this.error,required this.project});
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
     return LoginResponseModel(
-      token: json["token"] != null ? json["token"] : "",
+      canLogin: json["canLogin"] != null ? json["canLogin"] : false,
+      project: json["project"]!= null ? json["project"] : [],
       error: json["error"] != null ? json["error"] : "",
     );
   }
@@ -28,7 +30,7 @@ class LoginRequestModel {
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
-      'email': email.trim(),
+      'username': email.trim(),
       'password': password.trim(),
     };
 

@@ -1,4 +1,4 @@
-import 'package:basicflutter/model/drowing-model.dart';
+import 'package:basicflutter/model/drawing-model.dart';
 import 'package:basicflutter/model/materials-model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -6,11 +6,20 @@ import '../model/chartDrawing-model.dart';
 import '../model/chartManPower-model.dart';
 import '../model/chartMaterial-model.dart';
 import '../model/login-model.dart';
+import '../model/tableDrawing-model.dart';
 
 class APIService {
+//ต้องมาเเก้ domain
+  String baseUrl = 'http://192.168.1.28:4200';
+//-------------------------------------------------------------------
+//api เสร๋จเเล้ว
+//-------------------------------------------------------------------
+
   Future<LoginResponseModel> login(LoginRequestModel requestModel) async {
-    var url = Uri.parse('https://reqres.in/api/login');
-    final response = await http.post(url, body: requestModel.toJson());
+    var url = Uri.parse(baseUrl + '/login');
+    var jsonData = json.encode(requestModel.toJson());
+    final response = await http.post(url,
+        headers: {"Content-Type": "application/json"}, body: jsonData);
     if (response.statusCode == 200 || response.statusCode == 400) {
       return LoginResponseModel.fromJson(
         json.decode(response.body),
@@ -20,12 +29,9 @@ class APIService {
     }
   }
 
-//-------------------------------------------------------------------
-//api เเก้ domain
-//-------------------------------------------------------------------
   Future<DrawResponseModel> getListDraws() async {
-    var url = Uri.parse('http://192.168.1.5:3000/drawing-discipline');
-    final response = await http.get(url);
+    var url = Uri.parse('$baseUrl/drawing-discipline');
+    final response = await http.get(url); 
     if (response.statusCode == 200 || response.statusCode == 400) {
       Map<String, dynamic> data = {
         'draws': json.decode(response.body),
@@ -36,39 +42,50 @@ class APIService {
     }
   }
 
-//-------------------------------------------------------------------
-//api ที่เเก้เสร็จเเล้วอยู่ด้านบน ด้านล่าคือยังไม่เสร็จ
-//-------------------------------------------------------------------
   Future<ChartDrawingResponseModel> getDrawingChart(
       int projectId, int disciplineId) async {
-    var url = Uri.parse('http://192.168.1.5:3000/drawing-table');
+    var url = Uri.parse('$baseUrl/drawing-chart');
 
-    var data = jsonEncode({
-      'projectId': projectId,
-      'disciplineId': disciplineId
-    });
-    final response = await http.post(url,
-        headers: {"Content-Type": "application/json"}, body: data);
-    if (response.statusCode == 200 || response.statusCode == 400) {
-      Map<String, dynamic> jsontest = {
-        'chartBar': [
-          {'lable': 'a', 'plan': 1100, 'actuality': 1150},
-          {'lable': 'a', 'plan': 1200, 'actuality': 1250},
-          {'lable': 'a', 'plan': 1300, 'actuality': 1350},
-          {'lable': 'a', 'plan': 1400, 'actuality': 1450},
-        ],
-        'chartLine': [
-          {'lable': 'a', 'plan': 1100, 'actuality': 1150},
-          {'lable': 'a', 'plan': 1200, 'actuality': 1250},
-          {'lable': 'a', 'plan': 1300, 'actuality': 1350},
-          {'lable': 'a', 'plan': 1400, 'actuality': 1450},
-        ],
-      };
-      return ChartDrawingResponseModel.fromJson(jsontest);
-    } else {
+    var jsonData =
+        jsonEncode({'projectId': projectId, 'disciplineId': disciplineId});
+    try {
+      final response = await http.post(url,
+          headers: {"Content-Type": "application/json"}, body: jsonData);
+      if (response.statusCode == 200 || response.statusCode == 400) {
+
+        Map<String, dynamic> datatest = json.decode(response.body);
+       
+        return ChartDrawingResponseModel.fromJson(datatest);
+      } else {
+        throw Exception('Failed to load data!');
+      }
+    } catch (e) {
       throw Exception('Failed to load data!');
     }
   }
+    Future<TableDrawingResponseModel> getDrawingTable(
+      int projectId, int disciplineId) async {
+    var url = Uri.parse('$baseUrl/drawing-report');
+
+    var jsonData =
+        jsonEncode({'projectId': projectId, 'disciplineId': disciplineId});
+    try {
+      final response = await http.post(url,
+          headers: {"Content-Type": "application/json"}, body: jsonData);
+      if (response.statusCode == 200 || response.statusCode == 400) {
+        Map<String, dynamic> datatest = json.decode(response.body);
+        return TableDrawingResponseModel.fromJson(datatest);
+      } else {
+        throw Exception('Failed to load data!!!!!!');
+      }
+    } catch (e) {
+      throw Exception('Failed to load data!');
+    }
+  }
+
+//----------------------------------------------------------- --------
+//api ด้านล่าคือยังไม่เสร็จ
+//-------------------------------------------------------------------
 
   Future<MaterialsResponseModel> getListMaterials(int projectID) async {
     var url = Uri.parse('https://reqres.in/api/login');
@@ -108,16 +125,16 @@ class APIService {
     if (response.statusCode == 200 || response.statusCode == 400) {
       Map<String, dynamic> json = {
         'chartBar': [
-          {'lable': 'a', 'plan': 1100, 'actuality': 1150},
-          {'lable': 'a', 'plan': 1200, 'actuality': 1250},
-          {'lable': 'a', 'plan': 1300, 'actuality': 1350},
-          {'lable': 'a', 'plan': 1400, 'actuality': 1450},
+          {'label': 'a', 'plan': 1100, 'actual': 1150},
+          {'label': 'a', 'plan': 1200, 'actual': 1250},
+          {'label': 'a', 'plan': 1300, 'actual': 1350},
+          {'label': 'a', 'plan': 1400, 'actual': 1450},
         ],
         'chartLine': [
-          {'lable': 'a', 'plan': 1100, 'actuality': 1150},
-          {'lable': 'a', 'plan': 1200, 'actuality': 1250},
-          {'lable': 'a', 'plan': 1300, 'actuality': 1350},
-          {'lable': 'a', 'plan': 1400, 'actuality': 1450},
+          {'label': 'a', 'plan': 1100, 'actual': 1150},
+          {'label': 'a', 'plan': 1200, 'actual': 1250},
+          {'label': 'a', 'plan': 1300, 'actual': 1350},
+          {'label': 'a', 'plan': 1400, 'actual': 1450},
         ],
       };
       return ChartManpowerResponseModel.fromJson(json);
@@ -136,16 +153,16 @@ class APIService {
     if (response.statusCode == 200 || response.statusCode == 400) {
       Map<String, dynamic> json = {
         'chartBar': [
-          {'lable': 'a', 'plan': 1100, 'actuality': 1150},
-          {'lable': 'a', 'plan': 1200, 'actuality': 1250},
-          {'lable': 'a', 'plan': 1300, 'actuality': 1350},
-          {'lable': 'a', 'plan': 1400, 'actuality': 1450},
+          {'label': 'a', 'plan': 1100, 'actual': 1150},
+          {'label': 'a', 'plan': 1200, 'actual': 1250},
+          {'label': 'a', 'plan': 1300, 'actual': 1350},
+          {'label': 'a', 'plan': 1400, 'actual': 1450},
         ],
         'chartLine': [
-          {'lable': 'a', 'plan': 1100, 'actuality': 1150},
-          {'lable': 'a', 'plan': 1200, 'actuality': 1250},
-          {'lable': 'a', 'plan': 1300, 'actuality': 1350},
-          {'lable': 'a', 'plan': 1400, 'actuality': 1450},
+          {'label': 'a', 'plan': 1100, 'actual': 1150},
+          {'label': 'a', 'plan': 1200, 'actual': 1250},
+          {'label': 'a', 'plan': 1300, 'actual': 1350},
+          {'label': 'a', 'plan': 1400, 'actual': 1450},
         ],
       };
       return ChartMaterialResponseModel.fromJson(json);

@@ -1,7 +1,8 @@
 import 'package:basicflutter/screens/documant/document-daily.dart';
+import 'package:basicflutter/screens/documant/document-drawing.dart';
 import 'package:basicflutter/screens/insught/Insight-materials.dart';
 import 'package:basicflutter/component/test.dart';
-import 'package:basicflutter/screens/insught/insight-drowing.dart';
+import 'package:basicflutter/screens/insught/insight-drawing.dart';
 import 'package:basicflutter/screens/insught/insight-manpower.dart';
 import 'package:basicflutter/screens/loginPage.dart';
 import 'package:basicflutter/screens/mymain.dart';
@@ -10,6 +11,7 @@ import 'package:basicflutter/screens/report/report-daily.dart';
 import 'package:basicflutter/screens/report/report-manpower.dart';
 import 'package:basicflutter/screens/report/report-materials.dart';
 import 'package:flutter/material.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -39,11 +41,13 @@ class MyApp extends StatelessWidget {
         '/test': (BuildContext context) => const TestPage(),
         "/InsightMaterials": (BuildContext context) => const InsightMaterials(),
         "/InsightManpower": (BuildContext context) => const InsightManpower(),
+        "/InsightDrawing":(BuildContext context) => const InsightDrawing(),
         "/DocumentDaily": (BuildContext context) => const DocumentDaily(),
+        "/DocumentDrawing": (BuildContext context) => const DocumentDrawing(),
         "/ReportMaterials": (BuildContext context) => const ReportMaterials(),
         "/ReportManpower": (BuildContext context) => const ReportManpower(),
         "/ReportDaily": (BuildContext context) => const ReportDaily(),
-        "/Drawing":(BuildContext context) => const InsightDrowing(),
+        
       },
     );
   }

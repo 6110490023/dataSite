@@ -29,7 +29,7 @@ class _ChartBarState extends State<ChartBar> {
   @override
   Widget build(BuildContext context) {
     initBulid();
-    if(widget.inAsyncCall){
+    if (widget.inAsyncCall) {
       return Container(
         width: double.infinity,
         height: double.infinity,
@@ -40,11 +40,15 @@ class _ChartBarState extends State<ChartBar> {
       BarChartData(
         maxY: maxY,
         minY: 0,
+        gridData: FlGridData(show: false),
         titlesData: FlTitlesData(
-          show: true,
-          rightTitles: SideTitles(),
-          topTitles: SideTitles(),
-        ),
+            show: true,
+            rightTitles: SideTitles(),
+            topTitles: SideTitles(),
+            bottomTitles: SideTitles(
+              showTitles: true,
+              getTitles: _bottomTitles,
+            )),
         barGroups: listBar,
       ),
     );
@@ -56,10 +60,10 @@ class _ChartBarState extends State<ChartBar> {
     for (int i = 0; i < widget.charts.length; i++) {
       listBar.add(
         BarChartGroupData(
-          x: i + 1,
+          x: widget.charts[i].label.toInt(),
           barRods: [
             BarChartRodData(
-                y: widget.charts[i].actuality,
+                y: widget.charts[i].actual,
                 colors: [Colors.red],
                 width: 12,
                 borderRadius: BorderRadius.circular(0)),
@@ -72,5 +76,50 @@ class _ChartBarState extends State<ChartBar> {
         ),
       );
     }
+  }
+
+  String _bottomTitles(double value) {
+    String text;
+    switch (value.toInt() % 12) {
+      case 0:
+        text = 'Jan';
+        break;
+      case 1:
+        text = 'Feb';
+        break;
+      case 2:
+        text = 'Mar';
+        break;
+      case 3:
+        text = 'Apr';
+        break;
+      case 4:
+        text = 'May';
+        break;
+      case 5:
+        text = 'Jun';
+        break;
+      case 6:
+        text = 'Jul';
+        break;
+      case 7:
+        text = 'Aug';
+        break;
+      case 8:
+        text = 'Sep';
+        break;
+      case 9:
+        text = 'Oct';
+        break;
+      case 10:
+        text = 'Nov';
+        break;
+      case 11:
+        text = 'Dec';
+        break;
+      default:
+        return '';
+    }
+    return text;
   }
 }

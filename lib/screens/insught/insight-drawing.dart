@@ -1,19 +1,18 @@
 import 'package:basicflutter/component/list-component.dart';
-import 'package:basicflutter/model/drowing-model.dart';
-
-import 'package:basicflutter/screens/insught/drawing/display-drowing.dart';
+import 'package:basicflutter/model/drawing-model.dart';
+import 'package:basicflutter/screens/insught/drawing/chart-drawing.dart';
 import 'package:flutter/material.dart';
 import '../../ProgressHUD.dart';
 import '../../service/api-service.dart';
 
-class InsightDrowing extends StatefulWidget {
-  const InsightDrowing({Key? key}) : super(key: key);
+class InsightDrawing extends StatefulWidget {
+  const InsightDrawing({Key? key}) : super(key: key);
 
   @override
-  State<InsightDrowing> createState() => _InsightDrowingState();
+  State<InsightDrawing> createState() => _InsightDrawingState();
 }
 
-class _InsightDrowingState extends State<InsightDrowing> {
+class _InsightDrawingState extends State<InsightDrawing> {
   APIService apiService = APIService();
   List<DrawModel> draws = [];
   bool isApiCallProcess = false;
@@ -66,7 +65,7 @@ class _InsightDrowingState extends State<InsightDrowing> {
   void click(int index) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => DisplayDrawing(disciplineId:draws[index].id)),
+      MaterialPageRoute(builder: (context) => ChartDrawing(disciplineId:draws[index].id)),
     );
   }
 }

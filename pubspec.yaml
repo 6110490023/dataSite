@@ -37,6 +37,8 @@ dependencies:
   http: ^0.13.4
   fl_chart: ^0.41.0
   image_picker: ^0.8.5+3
+  syncfusion_flutter_pdfviewer: ^20.2.39-beta
+  shared_preferences: ^2.0.15
 
 
 dev_dependencies:

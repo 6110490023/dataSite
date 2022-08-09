@@ -15,7 +15,7 @@ class _InsightPageState extends State<InsightPage> {
   Widget build(BuildContext context) {
     final List<MenuData> menu = [
       MenuData(Icons.move_to_inbox_outlined, 'weather','/login'),
-      MenuData(Icons.find_in_page_outlined, 'Drawing Status','/Drawing'),
+      MenuData(Icons.find_in_page_outlined, 'Drawing Status','/InsightDrawing'),
       MenuData(Icons.find_in_page_outlined, 'Materials','/InsightMaterials'),
       MenuData(Icons.upgrade_outlined, 'Manpower','/InsightManpower'),
       MenuData(Icons.upgrade_outlined, 'RFI','/test'),

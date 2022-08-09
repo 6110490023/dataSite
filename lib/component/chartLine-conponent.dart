@@ -20,8 +20,14 @@ class ChartLine extends StatefulWidget {
 class _ChartLineState extends State<ChartLine> {
   double maxX = 0;
   double maxY = 0;
+  double minX = 0;
   List<FlSpot> listLineOne = <FlSpot>[];
   List<FlSpot> listLineTwo = <FlSpot>[];
+  static const _dateTextStyle = TextStyle(
+    fontSize: 10,
+    color: Colors.purple,
+    fontWeight: FontWeight.bold,
+  );
   @override
   void initState() {
     // TODO: implement initState
@@ -31,7 +37,7 @@ class _ChartLineState extends State<ChartLine> {
   @override
   Widget build(BuildContext context) {
     initBulid();
-    if(widget.inAsyncCall){
+    if (widget.inAsyncCall) {
       return Container(
         width: double.infinity,
         height: double.infinity,
@@ -42,13 +48,16 @@ class _ChartLineState extends State<ChartLine> {
       LineChartData(
         maxX: maxX,
         maxY: maxY,
-        minX: 0,
+        minX: minX,
         minY: 0,
         titlesData: FlTitlesData(
-          show: true,
-          rightTitles: SideTitles(),
-          topTitles: SideTitles(),
-        ),
+            show: true,
+            rightTitles: SideTitles(),
+            topTitles: SideTitles(),
+            bottomTitles: SideTitles(
+              showTitles: true,
+              getTitles: _bottomTitles,
+            )),
         lineBarsData: [
           LineChartBarData(
             spots: listLineOne,
@@ -67,16 +76,61 @@ class _ChartLineState extends State<ChartLine> {
     );
   }
 
+  String _bottomTitles(double value) {
+    String text;
+    switch (value.toInt() % 12) {
+      case 0:
+        text = 'Jan';
+        break;
+      case 1:
+        text = 'Feb';
+        break;
+      case 2:
+        text = 'Mar';
+        break;
+      case 3:
+        text = 'Apr';
+        break;
+      case 4:
+        text = 'May';
+        break;
+      case 5:
+        text = 'Jun';
+        break;
+      case 6:
+        text = 'Jul';
+        break;
+      case 7:
+        text = 'Aug';
+        break;
+      case 8:
+        text = 'Sep';
+        break;
+      case 9:
+        text = 'Oct';
+        break;
+      case 10:
+        text = 'Nov';
+        break;
+      case 11:
+        text = 'Dec';
+        break;
+      default:
+        return '';
+    }
+    return text;
+  }
+
   void initBulid() {
     listLineOne = <FlSpot>[];
     listLineTwo = <FlSpot>[];
-    this.maxX = widget.charts.length.toDouble() + 1.0;
+   
+    this.maxX = widget.charts.length.toDouble() + widget.charts[0].label;
     this.maxY = widget.MaxY;
+    this.minX = widget.charts[0].label - 1;
     for (int i = 0; i < widget.charts.length; i++) {
-      listLineOne.add(
-          FlSpot((i + 1).toDouble(), widget.charts[i].actuality.toDouble()));
-      listLineTwo
-          .add(FlSpot((i + 1).toDouble(), widget.charts[i].plan.toDouble()));
+      listLineOne.add(FlSpot(widget.charts[i].label, widget.charts[i].actual));
+      listLineTwo.add(FlSpot(widget.charts[i].label, widget.charts[i].plan));
     }
   }
 }
