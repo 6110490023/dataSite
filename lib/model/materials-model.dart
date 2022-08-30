@@ -56,10 +56,11 @@ class MaterialsRequestModel {
 class MaterialModel {
   final int id;
   final String name;
+  final String namePath;
 
-  MaterialModel({required this.id, required this.name});
+  MaterialModel({required this.id, required this.name ,required this.namePath});
   factory MaterialModel.formJson(Map<String, dynamic> json) {
     return MaterialModel(
-        id: json["material_id"] ?? 0, name: json["name"] ?? "");
+        id: json["material_id"] ?? 0, name: json["name"] ?? "", namePath: json["name"] ?? "");
   }
 }

@@ -79,19 +79,19 @@ class _MyMainState extends State<MyMain> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.insights),
             label: 'Insight',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: Icon(Icons.description_outlined),
             label: 'Document',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
+            icon: Icon(Icons.text_snippet_sharp),
             label: 'Report',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.delete),
+            icon: Icon(Icons.info_outlined),
             label: 'Infor',
           ),
         ],

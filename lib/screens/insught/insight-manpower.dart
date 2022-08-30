@@ -17,8 +17,12 @@ class _InsightManpowerState extends State<InsightManpower> {
   bool isApiCallProcess = false;
   APIService apiService = APIService();
   ChartManpowerResponseModel charts = ChartManpowerResponseModel(
-    chartBar: [ChartModel(label: 12.0, plan: 1000.0, actual: 0.0,disciplineName: "")],
-    chartLine: [ChartModel(label: 12.0, plan: 1500.0, actual: 0.0,disciplineName: "")],
+    chartBar: [
+      ChartModel(label: 12.0, plan: 1000.0, actual: 0.0, disciplineName: "")
+    ],
+    chartLine: [
+      ChartModel(label: 12.0, plan: 1500.0, actual: 0.0, disciplineName: "")
+    ],
     barMaxY: 1000.0,
     lineMaxY: 1000.0,
     error: '',
@@ -32,6 +36,12 @@ class _InsightManpowerState extends State<InsightManpower> {
       isApiCallProcess = true;
     });
     apiService.getManPowerChart(projectId).then((value) {
+      if (value.error != "") {
+        Navigator.pop(context);
+        setState(() {
+          isApiCallProcess = false;
+        });
+      }
       setState(() {
         charts = value;
         isApiCallProcess = false;

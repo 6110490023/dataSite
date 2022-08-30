@@ -1,6 +1,7 @@
 import 'package:basicflutter/model/drawing-model.dart';
 import 'package:basicflutter/model/materials-model.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '../model/chartDrawing-model.dart';
 import '../model/chartManPower-model.dart';
@@ -10,20 +11,29 @@ import '../model/tableDrawing-model.dart';
 
 class APIService {
 //ต้องมาเเก้ domain
-  String baseUrl = 'http://192.168.1.28:4200';
+  String baseUrl = 'http://192.168.1.12:4200';
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 //-------------------------------------------------------------------
 //api เสร๋จเเล้ว
 //-------------------------------------------------------------------
-
   Future<LoginResponseModel> login(LoginRequestModel requestModel) async {
     var url = Uri.parse(baseUrl + '/login');
     var jsonData = json.encode(requestModel.toJson());
-    final response = await http.post(url,
-        headers: {"Content-Type": "application/json"}, body: jsonData);
+    final response = await http
+        .post(url,
+            headers: {"Content-Type": "application/json"}, body: jsonData)
+        .timeout(
+      const Duration(seconds: 5),
+      onTimeout: () {
+        return http.Response('Error', 408);
+      },
+    );
     if (response.statusCode == 200 || response.statusCode == 400) {
       return LoginResponseModel.fromJson(
         json.decode(response.body),
       );
+    } else if (response.statusCode == 408) {
+      return LoginResponseModel.fromJson({"erorr": "Time out"});
     } else {
       throw Exception('Failed to load data!');
     }
@@ -31,31 +41,47 @@ class APIService {
 
   Future<DrawResponseModel> getListDraws() async {
     var url = Uri.parse('$baseUrl/drawing-discipline');
-    final response = await http.get(url); 
+    final response = await http.get(url).timeout(
+      const Duration(seconds: 5),
+      onTimeout: () {
+        return http.Response('Error', 408);
+      },
+    );
     if (response.statusCode == 200 || response.statusCode == 400) {
       Map<String, dynamic> data = {
         'draws': json.decode(response.body),
       };
       return DrawResponseModel.fromJson(data);
+    } else if (response.statusCode == 408) {
+      return DrawResponseModel.fromJson({"error": "Time out"});
     } else {
       throw Exception('Failed to load data!');
     }
   }
 
-  Future<ChartDrawingResponseModel> getDrawingChart(
-      int projectId, int disciplineId) async {
+  Future<ChartDrawingResponseModel> getDrawingChart(int disciplineId) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    int projectId = preferences.getInt('projectId') ?? -1;
     var url = Uri.parse('$baseUrl/drawing-chart');
 
     var jsonData =
         jsonEncode({'projectId': projectId, 'disciplineId': disciplineId});
     try {
-      final response = await http.post(url,
-          headers: {"Content-Type": "application/json"}, body: jsonData);
+      final response = await http
+          .post(url,
+              headers: {"Content-Type": "application/json"}, body: jsonData)
+          .timeout(
+        const Duration(seconds: 5),
+        onTimeout: () {
+          return http.Response('Error', 408);
+        },
+      );
       if (response.statusCode == 200 || response.statusCode == 400) {
-
         Map<String, dynamic> datatest = json.decode(response.body);
-       
+
         return ChartDrawingResponseModel.fromJson(datatest);
+      } else if (response.statusCode == 408) {
+        return ChartDrawingResponseModel.fromJson({"erorr": "Time out"});
       } else {
         throw Exception('Failed to load data!');
       }
@@ -63,15 +89,24 @@ class APIService {
       throw Exception('Failed to load data!');
     }
   }
-    Future<TableDrawingResponseModel> getDrawingTable(
-      int projectId, int disciplineId) async {
+
+  Future<TableDrawingResponseModel> getDrawingTable(int disciplineId) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    int projectId = preferences.getInt('projectId') ?? -1;
     var url = Uri.parse('$baseUrl/drawing-report');
 
     var jsonData =
         jsonEncode({'projectId': projectId, 'disciplineId': disciplineId});
     try {
-      final response = await http.post(url,
-          headers: {"Content-Type": "application/json"}, body: jsonData);
+      final response = await http
+          .post(url,
+              headers: {"Content-Type": "application/json"}, body: jsonData)
+          .timeout(
+        const Duration(seconds: 5),
+        onTimeout: () {
+          return http.Response('Error', 408);
+        },
+      );
       if (response.statusCode == 200 || response.statusCode == 400) {
         Map<String, dynamic> datatest = json.decode(response.body);
         return TableDrawingResponseModel.fromJson(datatest);

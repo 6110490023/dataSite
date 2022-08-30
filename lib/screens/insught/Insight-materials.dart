@@ -25,20 +25,25 @@ class _InsightMaterialsState extends State<InsightMaterials> {
       isApiCallProcess = true;
     });
     apiService.getListMaterials(project_id).then((value) {
+      if (value.error != "") {
+        Navigator.pop(context);
+        setState(() {
+          isApiCallProcess = false;
+        });
+      }
       setState(() {
-      materials = value.materials;
-      isApiCallProcess = false;
-    });
+        materials = value.materials;
+        isApiCallProcess = false;
+      });
     });
   }
 
- @override
+  @override
   Widget build(BuildContext context) {
     return ProgressHUD(inAsyncCall: isApiCallProcess, child: _uiSetup(context));
   }
 
-
-    Widget _uiSetup(BuildContext context) {
+  Widget _uiSetup(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Insight Materials'),
@@ -50,8 +55,9 @@ class _InsightMaterialsState extends State<InsightMaterials> {
           itemCount: materials.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
-                height: MediaQuery.of(context).size.height * 0.115,
+                height: MediaQuery.of(context).size.height * 0.13,
                 child: ListCard(
+                    namePath: "test",
                     title: materials[index].name,
                     function: () {
                       click(index);
@@ -65,8 +71,8 @@ class _InsightMaterialsState extends State<InsightMaterials> {
   void click(int index) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ChartMaterial(materials[index].id)),
+      MaterialPageRoute(
+          builder: (context) => ChartMaterial(materials[index].id)),
     );
   }
-
 }

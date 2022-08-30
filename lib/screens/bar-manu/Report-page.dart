@@ -9,12 +9,12 @@ class ReprotPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<MenuData> menu = [
-      MenuData(Icons.move_to_inbox_outlined, 'Dail Report','/ReportDaily'),
-      MenuData(Icons.find_in_page_outlined, 'Inspection','/test'),
-      MenuData(Icons.find_in_page_outlined, '','/test'),
-      MenuData(Icons.upgrade_outlined, 'Manpower','/ReportManpower'),
-      MenuData(Icons.upgrade_outlined, 'Materials','/ReportMaterials'),
-      MenuData(Icons.play_for_work_outlined, 'Punch Lists','/test'),
+      MenuData('images/report.png', 'Dail Report','/ReportDaily'),
+      MenuData('images/report.png', 'Inspection','/test'),
+      MenuData('images/issue.png', 'Issue','/test'),
+      MenuData('images/manpower.png', 'Manpower','/ReportManpower'),
+      MenuData('images/material.png', 'Materials','/ReportMaterials'),
+      MenuData('images/punch-list.png','Punch Lists','/test'),
     ];
     return MenuWidget(menu);  }
 }

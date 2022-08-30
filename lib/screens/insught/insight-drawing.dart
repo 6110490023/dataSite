@@ -26,6 +26,12 @@ class _InsightDrawingState extends State<InsightDrawing> {
       isApiCallProcess = true;
     });
     apiService.getListDraws().then((value) {
+       if (value.error != "") {  
+        setState(() {
+          isApiCallProcess = false;
+        });
+        Navigator.pop(context);
+      }
       setState(() {
         draws = value.drows;
         isApiCallProcess = false;
@@ -50,8 +56,9 @@ class _InsightDrawingState extends State<InsightDrawing> {
           itemCount: draws.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
-                height: MediaQuery.of(context).size.height * 0.115,
+                height: MediaQuery.of(context).size.height * 0.13,
                 child: ListCard(
+                    namePath: draws[index].namePath,
                     title: draws[index].name,
                     function: () {
                       click(index);

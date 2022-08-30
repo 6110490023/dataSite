@@ -19,38 +19,41 @@ class _ReportDailyState extends State<ReportDaily> {
           child: Text('Dail Report'),
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              FormCustom(),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/Gallery');
-                      },
-                      child: Icon(Icons.camera_alt),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
+      body: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Container(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                FormCustom(),
+                Row(
+                  children: [
+                    Expanded(
                       child: ElevatedButton(
-                          onPressed: () {
-                            if (_formkey.currentState!.validate()) {
-                              //valid flow
-                            }
-                          },
-                          child: Text("Submit"))),
-                ],
-              ),
-            ]),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/Gallery');
+                        },
+                        child: Icon(Icons.camera_alt),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        child: ElevatedButton(
+                            onPressed: () {
+                              if (_formkey.currentState!.validate()) {
+                                //valid flow
+                              }
+                            },
+                            child: Text("Submit"))),
+                  ],
+                ),
+              ]),
+        ),
       ),
     );
   }
@@ -79,28 +82,15 @@ class _ReportDailyState extends State<ReportDaily> {
               Expanded(
                 flex: 10,
                 child: SizedBox(
-                    height: 50,
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child:
-                                Text('${date.year}/${date.month}/${date.day}')),
-                        ElevatedButton(
-                            onPressed: () async {
-                              DateTime? newDate = await showDatePicker(
-                                context: context,
-                                initialDate: date,
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime(2100),
-                              );
-                              if (newDate == null) return;
-                              setState(() {
-                                date = newDate;
-                              });
-                            },
-                            child: Icon(Icons.date_range)),
-                      ],
-                    )),
+                  height: 50,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text('${date.day}/${date.month}/${date.year}'),
+                      ),
+                    ],
+                  ),
+                ),
               )
             ],
           ),
@@ -109,7 +99,7 @@ class _ReportDailyState extends State<ReportDaily> {
             children: [
               Expanded(
                 flex: 3,
-                child: Text("category"),
+                child: Text("Discipline"),
               ),
               Expanded(
                   flex: 10,
@@ -126,7 +116,6 @@ class _ReportDailyState extends State<ReportDaily> {
                           borderSide: BorderSide(color: Colors.grey, width: 1),
                           borderRadius: BorderRadius.circular(5),
                         ),
-                        filled: true,
                         fillColor: Colors.grey[100],
                       ),
                       validator: (value) =>
@@ -137,7 +126,6 @@ class _ReportDailyState extends State<ReportDaily> {
                         setState(() {
                           selectedValue = newValue!;
                         });
-                      
                       },
                       items: categoryItems,
                     ),
@@ -176,8 +164,8 @@ class _ReportDailyState extends State<ReportDaily> {
                       onChanged: (String? newValue) {
                         setState(() {
                           selectedValue = newValue!;
+                          print(selectedValue);
                         });
-                        
                       },
                       items: categoryItems,
                     ),
@@ -189,47 +177,7 @@ class _ReportDailyState extends State<ReportDaily> {
             children: [
               Expanded(
                 flex: 3,
-                child: Text("category"),
-              ),
-              Expanded(
-                  flex: 10,
-                  child: SizedBox(
-                    height: 50,
-                    child: DropdownButtonFormField(
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey[100],
-                      ),
-                      validator: (value) =>
-                          value == null ? "Select a country" : null,
-                      dropdownColor: Colors.grey[100],
-                      value: selectedValue,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedValue = newValue!;
-                        });
-                        
-                      },
-                      items: categoryItems,
-                    ),
-                  ))
-            ],
-          ),
-          SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: Text("category"),
+                child: Text("Name"),
               ),
               Expanded(
                   flex: 10,
@@ -271,6 +219,14 @@ class _ReportDailyState extends State<ReportDaily> {
               Expanded(
                 child: TextFormField(
                   keyboardType: TextInputType.multiline,
+                  maxLines: 8,
+                  minLines: 1,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                       borderSide: BorderSide(color: Colors.black45),
+                        borderRadius:
+                            BorderRadius.all(new Radius.circular(5.0))),
+                  ),
                 ),
               ),
             ],

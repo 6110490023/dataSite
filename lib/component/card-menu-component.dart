@@ -13,22 +13,22 @@ class CardMenu extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
       child: InkWell(
         onTap: () {
-            Navigator.of(context).pushNamed(menu.route);
-          
+        Navigator.of(context).pushNamed(menu.route);
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,  
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Icon(
-              menu.icon,
-              size: 35,
+            Container(
+              width: 40,
+              height: 40,
+              child: Image(image: AssetImage(menu.imagePath))
             ),
             SizedBox(height: 10),
             Text(
               menu.title,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 15, color: Colors.black87),
+              style: const TextStyle(fontSize: 17, color: Colors.black87),
             )
           ],
         ),

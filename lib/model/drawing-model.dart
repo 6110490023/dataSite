@@ -68,13 +68,15 @@ class DrawModel {
   final int id;
   final String code;
   final String name;
+  final String namePath;
 
-  DrawModel({required this.id, required this.code,required this.name});
+  DrawModel({required this.id, required this.code,required this.name , required this.namePath});
   factory DrawModel.formJson(Map<String, dynamic> json) {
     return DrawModel(
         id: json["IntDisciplineId"] != null ? json["IntDisciplineId"] : 0,
         code: json["DisciplineCode"]!= null ? json["DisciplineCode"] : "",
-        name: json["DisciplineName"] != null ? json["DisciplineName"] : ""
+        name: json["DisciplineName"] != null ? json["DisciplineName"] : "",
+        namePath: json["DisciplinePic"] != null ? json["DisciplinePic"] : "",
         );
   }
 }

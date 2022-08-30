@@ -27,6 +27,13 @@ class _DocumentDrawingState extends State<DocumentDrawing> {
       isApiCallProcess = true;
     });
     apiService.getListDraws().then((value) {
+     
+      if (value.error != "") {  
+        setState(() {
+          isApiCallProcess = false;
+        });
+        Navigator.pop(context);
+      }
       setState(() {
         draws = value.drows;
         isApiCallProcess = false;
@@ -42,7 +49,7 @@ class _DocumentDrawingState extends State<DocumentDrawing> {
   Widget _uiSetup(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Insight Drawing Status'),
+        title: const Text('Document Drawing'),
       ),
       body: Container(
         margin: const EdgeInsets.all(5),
@@ -51,8 +58,9 @@ class _DocumentDrawingState extends State<DocumentDrawing> {
           itemCount: draws.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
-                height: MediaQuery.of(context).size.height * 0.115,
+                height: MediaQuery.of(context).size.height * 0.13,
                 child: ListCard(
+                    namePath: draws[index].namePath,
                     title: draws[index].name,
                     function: () {
                       click(index);
@@ -66,7 +74,8 @@ class _DocumentDrawingState extends State<DocumentDrawing> {
   void click(int index) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => TableDrawing(disciplineId:draws[index].id)),
+      MaterialPageRoute(
+          builder: (context) => TableDrawing(disciplineId: draws[index].id)),
     );
   }
 }

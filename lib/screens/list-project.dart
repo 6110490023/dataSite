@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/login-model.dart';
 
-
 class ListProject extends StatefulWidget {
-  final LoginResponseModel  loginResponse;
+  final LoginResponseModel loginResponse;
   const ListProject({required this.loginResponse, Key? key}) : super(key: key);
 
   @override
@@ -13,7 +12,7 @@ class ListProject extends StatefulWidget {
 }
 
 class _ListProjectState extends State<ListProject> {
- final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   List<dynamic> project = [];
   bool isApiCallProcess = false;
   @override
@@ -36,8 +35,9 @@ class _ListProjectState extends State<ListProject> {
           itemCount: project.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
-                height: MediaQuery.of(context).size.height * 0.115,
+                height: MediaQuery.of(context).size.height * 0.13,
                 child: ListCard(
+                    namePath: "",
                     title: project[index]['ProjectName'],
                     function: () {
                       click(index);
@@ -50,11 +50,9 @@ class _ListProjectState extends State<ListProject> {
 
   Future<void> click(int index) async {
     final SharedPreferences prefs = await _prefs;
-    await  prefs.setInt('projectId', project[index]['IntProjectId']);
-    await  prefs.setInt('memberId', project[index]['IntMemberId']);
-    await  prefs.setString('projectName', project[index]['ProjectName']);
-    await  Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-   
-        
+    await prefs.setInt('projectId', project[index]['IntProjectId']);
+    await prefs.setInt('memberId', project[index]['IntMemberId']);
+    await prefs.setString('projectName', project[index]['ProjectName']);
+    await Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
   }
 }

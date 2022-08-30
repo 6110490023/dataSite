@@ -17,7 +17,9 @@ class ProgressHUD extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> widgetList = <Widget>[];
     widgetList.add(child);
+
     if (inAsyncCall) {
+      
       final modal = Stack(
         children: [
           Opacity(

@@ -47,6 +47,7 @@ class MyApp extends StatelessWidget {
         "/ReportMaterials": (BuildContext context) => const ReportMaterials(),
         "/ReportManpower": (BuildContext context) => const ReportManpower(),
         "/ReportDaily": (BuildContext context) => const ReportDaily(),
+        "/Gallery": (BuildContext context) => GalleryTest(),
         
       },
     );

@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<Null> checkLogin() async {
     try {
       final SharedPreferences prefs = await _prefs;
-      int memberId = await prefs.getInt('memberId') ?? -1;
+      int memberId = prefs.getInt('memberId') ?? -1;
       if (memberId != -1) {
         Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
       }
@@ -47,13 +47,16 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _uiSetup(BuildContext context) {
     return Scaffold(
+      
       key: scaffoldKey,
       body: SingleChildScrollView(
+        
         physics: const AlwaysScrollableScrollPhysics(),
         child: Container(
+          color: Colors.white,
           alignment: Alignment.center,
           height: MediaQuery.of(context).size.height,
-          margin: const EdgeInsets.all(16.0),
+          margin: const EdgeInsets.all(0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
@@ -66,17 +69,12 @@ class _LoginPageState extends State<LoginPage> {
                   key: globalFormKey,
                   child: Column(
                     children: <Widget>[
-                      Icon(
-                        Icons.favorite,
-                        color: Colors.pink,
-                        size: 100.0,
-                        semanticLabel:
-                            'Text to announce in accessibility modes',
-                      ),
+                      Image.asset("images/logo.jpg"),
                       SizedBox(height: 25),
                       Text(
-                        "Login",
-                        style: Theme.of(context).textTheme.headline2,
+
+                        "SANGFAH CONSTRUCTION",
+                        style: Theme.of(context).textTheme.headline5,
                       ),
                       SizedBox(height: 20),
                       TextFormField(

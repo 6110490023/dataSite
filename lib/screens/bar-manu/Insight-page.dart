@@ -14,15 +14,15 @@ class _InsightPageState extends State<InsightPage> {
   @override
   Widget build(BuildContext context) {
     final List<MenuData> menu = [
-      MenuData(Icons.move_to_inbox_outlined, 'weather','/login'),
-      MenuData(Icons.find_in_page_outlined, 'Drawing Status','/InsightDrawing'),
-      MenuData(Icons.find_in_page_outlined, 'Materials','/InsightMaterials'),
-      MenuData(Icons.upgrade_outlined, 'Manpower','/InsightManpower'),
-      MenuData(Icons.upgrade_outlined, 'RFI','/test'),
-      MenuData(Icons.play_for_work_outlined, 'Issue','/test'),
-      MenuData(Icons.play_for_work_outlined, 'Cost control','/test'),
-      MenuData(Icons.assignment_turned_in_outlined, 'Punch Lists','/test'),
-      MenuData(Icons.assignment_turned_in_outlined, 'Contract','/test')
+      MenuData('images/weather.png', 'weather','/test'),
+      MenuData('images/drawing.png', 'Drawing Status','/InsightDrawing'),
+      MenuData('images/material.png', 'Materials','/InsightMaterials'),
+      MenuData('images/manpower.png', 'Manpower','/InsightManpower'),
+      MenuData('images/rfi.png', 'RFI','/test'),
+      MenuData('images/issue.png', 'Issue','/test'),
+      MenuData('images/report.png', 'Cost control','/test'),
+      MenuData('images/punch-list.png', 'Punch Lists','/test'),
+      MenuData('images/contract.png', 'Contract','/test')
     ];
     return MenuWidget(menu);
   }

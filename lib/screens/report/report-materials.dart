@@ -25,6 +25,12 @@ class _ReportMaterialsState extends State<ReportMaterials> {
       isApiCallProcess = true;
     });
     apiService.getListMaterials(project_id).then((value) {
+      if (value.error != "") {
+        
+        setState(() {
+          isApiCallProcess = false;
+        });
+      }
       setState(() {
         materials = value.materials;
         isApiCallProcess = false;
@@ -49,8 +55,9 @@ class _ReportMaterialsState extends State<ReportMaterials> {
           itemCount: materials.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
-                height: MediaQuery.of(context).size.height * 0.115,
+                height: MediaQuery.of(context).size.height * 0.13,
                 child: ListCard(
+                    namePath: "test",
                     title: materials[index].name,
                     function: () {
                       click(index);

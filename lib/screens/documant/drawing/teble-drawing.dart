@@ -15,7 +15,6 @@ class TableDrawing extends StatefulWidget {
 class _TableDrawingState extends State<TableDrawing> {
   bool isApiCallProcess = false;
   APIService apiService = APIService();
-  final int projectId = 1;
   List<ReportModel> listReport = [];
   List<DataRow> table = [];
   List<TableRow> table2 = [];
@@ -26,7 +25,13 @@ class _TableDrawingState extends State<TableDrawing> {
     setState(() {
       isApiCallProcess = true;
     });
-    apiService.getDrawingTable(projectId, widget.disciplineId).then((value) {
+    apiService.getDrawingTable( widget.disciplineId).then((value) {
+      if (value.error != "") {
+        Navigator.pop(context);
+        setState(() {
+          isApiCallProcess = false;
+        });
+      }
       setTable();
       setState(() {
         listReport = value.table;
@@ -38,56 +43,16 @@ class _TableDrawingState extends State<TableDrawing> {
     });
   }
 
-  // DataRow addRow(ReportModel row) {
-  //   DataRow _tableRow = DataRow(
-  //     cells: <DataCell>[
-  //       DataCell(
-  //         ConstrainedBox(
-  //           constraints: BoxConstraints(
-  //             maxWidth: 10,
-  //           ),
-  //           child: IconButton(
-  //               onPressed: () {
-  //                 Navigator.push(context,
-  //                     MaterialPageRoute(builder: (context) => PdfViewer()));
-  //               },
-  //               icon: const Icon(Icons.cable)),
-  //         ),
-  //       ),
-  //       DataCell(
-  //         ConstrainedBox(
-  //           constraints: BoxConstraints(
-  //             maxWidth: 30,
-  //           ),
-  //           child: Text(row.drawingNo, overflow: TextOverflow.ellipsis),
-  //         ),
-  //       ),
-  //       DataCell(
-  //         ConstrainedBox(
-  //           constraints: BoxConstraints(maxWidth: 20),
-  //           child: Text(row.flieName, overflow: TextOverflow.ellipsis),
-  //         ),
-  //       ),
-  //       DataCell(
-  //         ConstrainedBox(
-  //           constraints: BoxConstraints(
-  //             maxWidth: MediaQuery.of(context).size.width * 0.15,
-  //           ),
-  //           child: Text(row.status.toString(), overflow: TextOverflow.ellipsis),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-
-  //   return _tableRow;
-  // }
-
   TableRow oneRow(ReportModel row) {
     TableRow _tableRow = TableRow(children: [
       TableRowInkWell(
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => PdfViewer()));
+                context,
+                MaterialPageRoute(
+                    builder: (context) => PdfViewer(
+                          report: row,
+                        )));
           },
           child: Container(
             margin: EdgeInsets.all(10),
@@ -98,15 +63,19 @@ class _TableDrawingState extends State<TableDrawing> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     )),
-                Text('Discription',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                Text(row.desc, style: TextStyle(fontWeight: FontWeight.bold)),
               ],
             ),
           )),
       Container(
         height: 35,
-        child: Text(
-          row.approveDate,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              row.approveDate,
+            ),
+          ],
         ),
       ),
     ]);

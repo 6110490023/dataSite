@@ -47,8 +47,8 @@ class _MenuWidget extends State<MenuWidget> {
 }
 
 class MenuData {
-  MenuData(this.icon, this.title ,this.route);
-  final IconData icon;
+  MenuData(this.imagePath, this.title ,this.route);
+  final String imagePath;
   final String title;
   final String route;
 }

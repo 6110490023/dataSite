@@ -124,11 +124,20 @@ class _ChartLineState extends State<ChartLine> {
   void initBulid() {
     listLineOne = <FlSpot>[];
     listLineTwo = <FlSpot>[];
-   
-    this.maxX = widget.charts.length.toDouble() + widget.charts[0].label;
+    
+   if(widget.charts.length>0){
     this.maxY = widget.MaxY;
-    this.minX = widget.charts[0].label - 1;
+    this.maxX = widget.charts.length.toDouble() +  widget.charts[0].label ;
+    this.minX =  widget.charts[0].label - 1 ;
+   }
+   else{
+    this.maxY = widget.MaxY+1.0;
+    this.maxX = 0 ;
+    this.minX =  0 ;
+   }
+
     for (int i = 0; i < widget.charts.length; i++) {
+      print(widget.charts[i].actual);
       listLineOne.add(FlSpot(widget.charts[i].label, widget.charts[i].actual));
       listLineTwo.add(FlSpot(widget.charts[i].label, widget.charts[i].plan));
     }

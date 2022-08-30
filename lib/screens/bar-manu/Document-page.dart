@@ -9,12 +9,12 @@ class DocumentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<MenuData> menu = [
-      MenuData(Icons.move_to_inbox_outlined, 'Drawing','/DocumentDrawing'),
-      MenuData(Icons.find_in_page_outlined, 'Daily Report','/DocumentDaily'),
-      MenuData(Icons.find_in_page_outlined, 'Inspection','/test'),
-      MenuData(Icons.upgrade_outlined, 'Punch Lists','/test'),
-      MenuData(Icons.upgrade_outlined, 'RFI','/test'),
-      MenuData(Icons.play_for_work_outlined, 'Issue','/test'),
+      MenuData('images/drawing.png', 'Drawing','/DocumentDrawing'),
+      MenuData('images/report.png', 'Daily Report','/DocumentDaily'),
+      MenuData('images/report.png', 'Inspection','/test'),
+      MenuData('images/punch-list.png', 'Punch Lists','/test'),
+      MenuData('images/rfi.png','RFI','/test'),
+      MenuData('images/issue.png', 'Issue','/test'),
     ];
     return MenuWidget(menu);
   }
