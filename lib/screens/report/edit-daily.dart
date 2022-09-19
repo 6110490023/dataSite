@@ -5,19 +5,20 @@ import 'package:basicflutter/service/api-service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ReportDaily extends StatefulWidget {
-  const ReportDaily({Key? key}) : super(key: key);
+class EditDaily extends StatefulWidget {
+  final fromDailyReportModel oldFormModel;
+  final IntReportId;
+  const EditDaily({required this.oldFormModel,required this.IntReportId, Key? key}) : super(key: key);
 
   @override
-  State<ReportDaily> createState() => _ReportDailyState();
+  State<EditDaily> createState() => _EditDailyState();
 }
 
-class _ReportDailyState extends State<ReportDaily> {
+class _EditDailyState extends State<EditDaily> {
   final _formkey = GlobalKey<FormState>();
   DateTime date = DateTime.now();
   final ImagePicker imgpicker = ImagePicker();
   fromDailyReportModel formModel = fromDailyReportModel();
-  String selectedValue = "1";
   bool isApiCallProcess = false;
   APIService apiService = APIService();
   List<DropdownMenuItem<String>> disciplines = [
@@ -58,6 +59,7 @@ class _ReportDailyState extends State<ReportDaily> {
   @override
   void initState() {
     super.initState();
+    
     setState(() {
       isApiCallProcess = true;
     });
@@ -77,6 +79,7 @@ class _ReportDailyState extends State<ReportDaily> {
               child: Text(location.locationName)));
         }
         isApiCallProcess = false;
+        formModel = widget.oldFormModel;
       });
     });
   }
@@ -156,7 +159,7 @@ class _ReportDailyState extends State<ReportDaily> {
                               });
                               print(formModel.disciplineId);
                               apiService
-                                  .uploadDailyReport(formModel)
+                                  .upDateDailyReport(formModel,widget.IntReportId)
                                   .then((value) {
                                 if (value.isNotEmpty) {
                                   apiService
@@ -257,7 +260,7 @@ class _ReportDailyState extends State<ReportDaily> {
               formModel.setDiscripline(int.parse(newValue));
               print(formModel.disciplineId);
             });
-          }),
+          }), 
           SizedBox(height: 10),
           dropdownCustom("Location Type", locationType, "", (newValue) {
             setState(() {
@@ -280,6 +283,7 @@ class _ReportDailyState extends State<ReportDaily> {
               Expanded(
                 child: TextFormField(
                   keyboardType: TextInputType.multiline,
+                  initialValue: widget.oldFormModel.textData,
                   onChanged: (String? input) {
                     formModel.setTextData(input!);
                     print(formModel.textData);

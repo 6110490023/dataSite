@@ -1,14 +1,14 @@
 class LoginResponseModel {
   final bool canLogin;
-  final List<dynamic> project;
+  final int memberId;
   final String error;
 
-  LoginResponseModel({required this.canLogin,required this.error,required this.project});
+  LoginResponseModel({required this.canLogin,required this.error,required this.memberId});
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
     return LoginResponseModel(
       canLogin: json["canLogin"] != null ? json["canLogin"] : false,
-      project: json["project"]!= null ? json["project"] : [],
+      memberId: json["IntMemberId"]!= null ? json["IntMemberId"] : -1,
       error: json["error"] != null ? json["error"] : "",
     );
   }

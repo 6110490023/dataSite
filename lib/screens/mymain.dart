@@ -2,6 +2,7 @@ import 'package:basicflutter/screens/bar-manu/Document-page.dart';
 import 'package:basicflutter/screens/bar-manu/Infor-page.dart';
 import 'package:basicflutter/screens/bar-manu/Insight-page.dart';
 import 'package:basicflutter/screens/bar-manu/Report-page.dart';
+import 'package:basicflutter/screens/list-project.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,12 +14,14 @@ class MyMain extends StatefulWidget {
 }
 
 class _MyMainState extends State<MyMain> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   String projectName = '';
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  
   static const List<Widget> _widgetOptions = <Widget>[
+    ListProject(isFirst: false),
     InsightPage(),
     DocumentPage(),
     ReprotPage(),
@@ -31,7 +34,7 @@ class _MyMainState extends State<MyMain> {
     });
   }
   String getNamePage(){
-    List<String> listPage= ['Insight','Document','Report','Infor' ];
+    List<String> listPage= ['List Project','Insight','Document','Report','Infor' ];
     return listPage[this._selectedIndex];
   }
 
@@ -43,6 +46,7 @@ class _MyMainState extends State<MyMain> {
 
   Future<Null> getProjectName() async {
     try {
+
       final SharedPreferences prefs = await _prefs;
       String _projectName = await prefs.getString('projectName') ?? "";
       setState(() {
@@ -79,6 +83,10 @@ class _MyMainState extends State<MyMain> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.insights),
             label: 'Insight',
           ),
@@ -87,7 +95,7 @@ class _MyMainState extends State<MyMain> {
             label: 'Document',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.text_snippet_sharp),
+            icon: Icon(Icons.inventory_sharp),
             label: 'Report',
           ),
           BottomNavigationBarItem(

@@ -1,5 +1,5 @@
 import 'package:basicflutter/component/list-component.dart';
-import 'package:basicflutter/model/drawing-model.dart';
+import 'package:basicflutter/model/disciplines-model.dart';
 import 'package:basicflutter/screens/documant/drawing/teble-drawing.dart';
 import 'package:basicflutter/screens/insught/drawing/chart-drawing.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +15,8 @@ class DocumentDrawing extends StatefulWidget {
 
 class _DocumentDrawingState extends State<DocumentDrawing> {
   APIService apiService = APIService();
-  List<DrawModel> draws = [];
+  List<DisciplineModel> disciplines = [];
   bool isApiCallProcess = false;
-  int projectId = 10;
-  int typeID = 10;
   @override
   void initState() {
     // TODO: implement initState
@@ -26,7 +24,7 @@ class _DocumentDrawingState extends State<DocumentDrawing> {
     setState(() {
       isApiCallProcess = true;
     });
-    apiService.getListDraws().then((value) {
+    apiService.getListDisciplines().then((value) {
      
       if (value.error != "") {  
         setState(() {
@@ -35,7 +33,7 @@ class _DocumentDrawingState extends State<DocumentDrawing> {
         Navigator.pop(context);
       }
       setState(() {
-        draws = value.drows;
+        disciplines = value.disciplines;
         isApiCallProcess = false;
       });
     });
@@ -55,13 +53,13 @@ class _DocumentDrawingState extends State<DocumentDrawing> {
         margin: const EdgeInsets.all(5),
         color: Colors.white70,
         child: ListView.builder(
-          itemCount: draws.length,
+          itemCount: disciplines.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
                 height: MediaQuery.of(context).size.height * 0.13,
                 child: ListCard(
-                    namePath: draws[index].namePath,
-                    title: draws[index].name,
+                    namePath: disciplines[index].namePath,
+                    title: disciplines[index].name,
                     function: () {
                       click(index);
                     }));
@@ -75,7 +73,7 @@ class _DocumentDrawingState extends State<DocumentDrawing> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => TableDrawing(disciplineId: draws[index].id)),
+          builder: (context) => TableDrawing(disciplineId: disciplines[index].id)),
     );
   }
 }

@@ -23,32 +23,32 @@ Request to web
  */
 
 
-class DrawResponseModel {
-  final List<DrawModel> drows;
+class DisciplineResponseModel {
+  final List<DisciplineModel> disciplines;
   final String error;
 
-  DrawResponseModel({required this.drows ,required this.error});
+  DisciplineResponseModel({required this.disciplines ,required this.error});
 
-  factory DrawResponseModel.fromJson(Map<String, dynamic> json) {
-    List<DrawModel> _draws = [];
-    if (json["draws"] != null) {
-      json["draws"].forEach((draw) {
-        DrawModel drawModel = DrawModel.formJson(draw);
-        _draws.add(drawModel);
+  factory DisciplineResponseModel.fromJson(Map<String, dynamic> json) {
+    List<DisciplineModel> _disciplines = [];
+    if (json["disciplines"] != null) {
+      json["disciplines"].forEach((discipline) {
+        DisciplineModel drawModel = DisciplineModel.formJson(discipline);
+        _disciplines.add(drawModel);
       });
     }
-    return DrawResponseModel(
-      drows: _draws,
+    return DisciplineResponseModel(
+      disciplines: _disciplines,
       error: json["error"] != null ? json["error"] : "",
     );
   }
 }
 
-class DrowRequestModel {
+class DisciplineRequestModel {
   int projectId; 
   int typeId;
 
-  DrowRequestModel({required this.projectId ,required this.typeId});
+  DisciplineRequestModel({required this.projectId ,required this.typeId});
 
 
   Map<String, dynamic> toJson() {
@@ -64,15 +64,15 @@ class DrowRequestModel {
 
 
 
-class DrawModel {
+class DisciplineModel {
   final int id;
   final String code;
   final String name;
   final String namePath;
 
-  DrawModel({required this.id, required this.code,required this.name , required this.namePath});
-  factory DrawModel.formJson(Map<String, dynamic> json) {
-    return DrawModel(
+  DisciplineModel({required this.id, required this.code,required this.name , required this.namePath});
+  factory DisciplineModel.formJson(Map<String, dynamic> json) {
+    return DisciplineModel(
         id: json["IntDisciplineId"] != null ? json["IntDisciplineId"] : 0,
         code: json["DisciplineCode"]!= null ? json["DisciplineCode"] : "",
         name: json["DisciplineName"] != null ? json["DisciplineName"] : "",

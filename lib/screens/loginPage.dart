@@ -140,10 +140,8 @@ class _LoginPageState extends State<LoginPage> {
                               vertical: 12, horizontal: 80),
                           shape: const StadiumBorder(),
                         ),
-                        onPressed: () {
+                        onPressed: ()  {
                           if (validateAndSave()) {
-                            
-
                             setState(() {
                               isApiCallProcess = true;
                             });
@@ -151,17 +149,15 @@ class _LoginPageState extends State<LoginPage> {
                             APIService apiService = APIService();
                             apiService.login(loginRequestModel).then((value) {
                               if (value != null) {
+                                setMemberId(value.memberId);
                                 setState(() {
                                   isApiCallProcess = false;
                                 });
-
                                 if (value.canLogin) {
-                                
+
                                   Navigator.pushAndRemoveUntil(
                                       context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ListProject(
-                                              loginResponse: value)),
+                                      MaterialPageRoute(builder: (context) => ListProject(isFirst: true)),
                                       (route) => false);
                                 } else {
                                   final snackBar =
@@ -188,6 +184,10 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+  Future<void> setMemberId(int IntMemberId) async {
+    final SharedPreferences prefs = await _prefs;
+    await prefs.setInt('memberId', IntMemberId);
   }
 
   bool validateAndSave() {

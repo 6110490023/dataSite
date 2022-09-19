@@ -16,8 +16,8 @@ class _InsightPageState extends State<InsightPage> {
     final List<MenuData> menu = [
       MenuData('images/weather.png', 'weather','/test'),
       MenuData('images/drawing.png', 'Drawing Status','/InsightDrawing'),
-      MenuData('images/material.png', 'Materials','/InsightMaterials'),
-      MenuData('images/manpower.png', 'Manpower','/InsightManpower'),
+      MenuData('images/material.png', 'Materials','/test'),
+      MenuData('images/manpower.png', 'Manpower','/test'),
       MenuData('images/rfi.png', 'RFI','/test'),
       MenuData('images/issue.png', 'Issue','/test'),
       MenuData('images/report.png', 'Cost control','/test'),

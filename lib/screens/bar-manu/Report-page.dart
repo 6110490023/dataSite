@@ -12,8 +12,8 @@ class ReprotPage extends StatelessWidget {
       MenuData('images/report.png', 'Dail Report','/ReportDaily'),
       MenuData('images/report.png', 'Inspection','/test'),
       MenuData('images/issue.png', 'Issue','/test'),
-      MenuData('images/manpower.png', 'Manpower','/ReportManpower'),
-      MenuData('images/material.png', 'Materials','/ReportMaterials'),
+      MenuData('images/manpower.png', 'Manpower','/test'),
+      MenuData('images/material.png', 'Materials','/test'),
       MenuData('images/punch-list.png','Punch Lists','/test'),
     ];
     return MenuWidget(menu);  }

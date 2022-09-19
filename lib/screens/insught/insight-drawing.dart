@@ -1,5 +1,5 @@
 import 'package:basicflutter/component/list-component.dart';
-import 'package:basicflutter/model/drawing-model.dart';
+import 'package:basicflutter/model/disciplines-model.dart';
 import 'package:basicflutter/screens/insught/drawing/chart-drawing.dart';
 import 'package:flutter/material.dart';
 import '../../ProgressHUD.dart';
@@ -14,10 +14,8 @@ class InsightDrawing extends StatefulWidget {
 
 class _InsightDrawingState extends State<InsightDrawing> {
   APIService apiService = APIService();
-  List<DrawModel> draws = [];
+  List<DisciplineModel> disciplines = [];
   bool isApiCallProcess = false;
-  int projectId = 10;
-  int typeID = 10;
   @override
   void initState() {
     // TODO: implement initState
@@ -25,7 +23,7 @@ class _InsightDrawingState extends State<InsightDrawing> {
     setState(() {
       isApiCallProcess = true;
     });
-    apiService.getListDraws().then((value) {
+    apiService.getListDisciplines().then((value) {
        if (value.error != "") {  
         setState(() {
           isApiCallProcess = false;
@@ -33,7 +31,7 @@ class _InsightDrawingState extends State<InsightDrawing> {
         Navigator.pop(context);
       }
       setState(() {
-        draws = value.drows;
+        disciplines = value.disciplines;
         isApiCallProcess = false;
       });
     });
@@ -53,13 +51,13 @@ class _InsightDrawingState extends State<InsightDrawing> {
         margin: const EdgeInsets.all(5),
         color: Colors.white70,
         child: ListView.builder(
-          itemCount: draws.length,
+          itemCount: disciplines.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
                 height: MediaQuery.of(context).size.height * 0.13,
                 child: ListCard(
-                    namePath: draws[index].namePath,
-                    title: draws[index].name,
+                    namePath: disciplines[index].namePath,
+                    title: disciplines[index].name,
                     function: () {
                       click(index);
                     }));
@@ -72,7 +70,7 @@ class _InsightDrawingState extends State<InsightDrawing> {
   void click(int index) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ChartDrawing(disciplineId:draws[index].id)),
+      MaterialPageRoute(builder: (context) => ChartDrawing(disciplineId:disciplines[index].id)),
     );
   }
 }

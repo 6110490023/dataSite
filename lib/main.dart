@@ -6,7 +6,6 @@ import 'package:basicflutter/screens/insught/insight-drawing.dart';
 import 'package:basicflutter/screens/insught/insight-manpower.dart';
 import 'package:basicflutter/screens/loginPage.dart';
 import 'package:basicflutter/screens/mymain.dart';
-import 'package:basicflutter/screens/report/daily/gallery.dart';
 import 'package:basicflutter/screens/report/report-daily.dart';
 import 'package:basicflutter/screens/report/report-manpower.dart';
 import 'package:basicflutter/screens/report/report-materials.dart';
@@ -38,6 +37,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => const MyMain(),
         "/login": (BuildContext context) => const LoginPage(),
+        'Projects':(BuildContext context) => const LoginPage(),
         '/test': (BuildContext context) => const TestPage(),
         "/InsightMaterials": (BuildContext context) => const InsightMaterials(),
         "/InsightManpower": (BuildContext context) => const InsightManpower(),
@@ -46,8 +46,7 @@ class MyApp extends StatelessWidget {
         "/DocumentDrawing": (BuildContext context) => const DocumentDrawing(),
         "/ReportMaterials": (BuildContext context) => const ReportMaterials(),
         "/ReportManpower": (BuildContext context) => const ReportManpower(),
-        "/ReportDaily": (BuildContext context) => const ReportDaily(),
-        "/Gallery": (BuildContext context) => GalleryTest(),
+        "/ReportDaily": (BuildContext context) => const ReportDaily()
         
       },
     );
