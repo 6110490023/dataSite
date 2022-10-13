@@ -1,0 +1,6 @@
+version: "Apple Swift version 5.7.1 (swiftlang-5.7.1.131.4 clang-1400.0.29.51)"
+options: "5d9359f779a5ce4768098d68a3a4e30c3155d59c08aaf99d944e1adcc27c5a20"
+build_start_time: [1664209082, 605461120]
+build_end_time: [1664209082, 658224105]
+inputs:
+  "/Users/kyryeon/Downloads/dataSite-main/ios/Runner/AppDelegate.swift": !private [1663554582, 0]

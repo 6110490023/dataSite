@@ -1,0 +1,14 @@
+{
+  'version': 0,
+  'use-external-names': 'false',
+  'case-sensitive': 'false',
+  'roots': [{
+    'type': 'directory',
+    'name': "/Users/kyryeon/Downloads/dataSite-main/ios/build/Debug-iphoneos/syncfusion_flutter_pdfviewer/syncfusion_flutter_pdfviewer.framework/Modules"
+    'contents': [{
+      'type': 'file',
+      'name': "module.modulemap",
+      'external-contents': "/Users/kyryeon/Downloads/dataSite-main/ios/build/Pods.build/Debug-iphoneos/syncfusion_flutter_pdfviewer.build/unextended-module.modulemap",
+    }]
+  }]
+}
