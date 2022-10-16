@@ -137,7 +137,6 @@ class _ChartLineState extends State<ChartLine> {
    }
 
     for (int i = 0; i < widget.charts.length; i++) {
-      print(widget.charts[i].actual);
       listLineOne.add(FlSpot(widget.charts[i].label, widget.charts[i].actual));
       listLineTwo.add(FlSpot(widget.charts[i].label, widget.charts[i].plan));
     }

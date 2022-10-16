@@ -139,11 +139,11 @@ class APIService {
     }
   }
 
-  Future<ChartDrawingResponseModel> getDrawingChart(int disciplineId) async {
+  Future<ChartDrawingResponseModel> getDrawingChart(int disciplineId,String year) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     int projectId = preferences.getInt('projectId') ?? -1;
     var url = Uri.parse('$baseUrl/drawing-chart');
-
+    print('test:'+year);
     var jsonData =
         jsonEncode({'projectId': projectId, 'disciplineId': disciplineId});
     try {

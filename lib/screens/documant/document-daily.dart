@@ -1,5 +1,6 @@
 import 'dart:math';
-
+import 'package:basicflutter/screens/documant/daily/detail-daily.dart';
+import 'package:intl/intl.dart';
 import 'package:basicflutter/ProgressHUD.dart';
 import 'package:basicflutter/model/daily-model.dart';
 import 'package:basicflutter/model/reportDaily-model.dart';
@@ -22,9 +23,27 @@ class _DocumentDailyState extends State<DocumentDaily> {
 
   // Item of the ListView
   Widget _listItem(index) {
-    String date = reports[index].DtLastUpdate.split('T')[0];
+    String date = DateTime.now().toString().split(' ')[0];
     String dateCreate = reports[index].DtCreateDate.split('T')[0];
     List<Widget> info = [
+      IconButton(
+          iconSize: 35,
+          color: Colors.blue[300],
+          onPressed: () {
+            // fromDailyReportModel formModel = fromDailyReportModel();
+            // formModel.setDiscripline(reports[index].IntDisciplineId);
+            // formModel.setLocation(reports[index].IntLocationId);
+            // formModel.setLocationTypeId(
+            //     reports[index].IntLocationTypeId.toString());
+            // formModel.setTextData(reports[index].ReportContent.toString());
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DetailDaily()),
+            );
+          },
+          icon: Icon(Icons.note_outlined)),
+      SizedBox(width: 5),
       Column(
         children: [
           Row(children: [
@@ -45,21 +64,47 @@ class _DocumentDailyState extends State<DocumentDaily> {
         ],
       )
     ];
-    if (date != dateCreate) {
+    if (date == dateCreate) {
       info = [
-        IconButton(iconSize: 35 ,color: Colors.red[400], onPressed: (){
-          fromDailyReportModel formModel = fromDailyReportModel();
-          formModel.setDiscripline(reports[index].IntDisciplineId);
-          formModel.setLocation(reports[index].IntLocationId);
-          formModel.setLocationTypeId(reports[index].IntLocationTypeId.toString());
-          formModel.setTextData(reports[index].ReportContent.toString());
-          print(formModel.textData);
-           Navigator.push( context,
-      MaterialPageRoute(
-          builder: (context) => EditDaily(oldFormModel: formModel,IntReportId: reports[index].IntReportId,)),
-    );
-    }, icon: Icon(Icons.edit_note_outlined)),
-        SizedBox(width: 5),
+        IconButton(
+            iconSize: 30,
+            color: Colors.blue[300],
+            onPressed: () {
+              // fromDailyReportModel formModel = fromDailyReportModel();
+              // formModel.setDiscripline(reports[index].IntDisciplineId);
+              // formModel.setLocation(reports[index].IntLocationId);
+              // formModel.setLocationTypeId(
+              //     reports[index].IntLocationTypeId.toString());
+              // formModel.setTextData(reports[index].ReportContent.toString());
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DetailDaily()),
+              );
+            },
+            icon: Icon(Icons.note_outlined)),
+        IconButton(
+            iconSize: 30,
+            color: Colors.red[300],
+            onPressed: () {
+              fromDailyReportModel formModel = fromDailyReportModel();
+              formModel.setDiscripline(reports[index].IntDisciplineId);
+              formModel.setLocation(reports[index].IntLocationId);
+              formModel.setLocationTypeId(
+                  reports[index].IntLocationTypeId.toString());
+              formModel.setTextData(reports[index].ReportContent.toString());
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => EditDaily(
+                          oldFormModel: formModel,
+                          IntReportId: reports[index].IntReportId,
+                          date: dateCreate,
+                        )),
+              );
+            },
+            icon: Icon(Icons.edit_note_outlined)),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -83,7 +128,7 @@ class _DocumentDailyState extends State<DocumentDaily> {
       ];
     }
     return Container(
-      height: MediaQuery.of(context).size.height/10,
+      height: MediaQuery.of(context).size.height / 10,
       padding: const EdgeInsets.all(5),
       decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(width: 1, color: Colors.black26))),

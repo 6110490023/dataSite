@@ -17,7 +17,6 @@ class _ReportDailyState extends State<ReportDaily> {
   DateTime date = DateTime.now();
   final ImagePicker imgpicker = ImagePicker();
   fromDailyReportModel formModel = fromDailyReportModel();
-  String selectedValue = "1";
   bool isApiCallProcess = false;
   APIService apiService = APIService();
   List<DropdownMenuItem<String>> disciplines = [
@@ -93,9 +92,7 @@ class _ReportDailyState extends State<ReportDaily> {
           child: Text('Daily Report'),
         ),
       ),
-      body: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: Container(
+      body: Container(
           padding: const EdgeInsets.all(20.0),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,7 +151,6 @@ class _ReportDailyState extends State<ReportDaily> {
                               setState(() {
                                 isApiCallProcess = true;
                               });
-                              print(formModel.disciplineId);
                               apiService
                                   .uploadDailyReport(formModel)
                                   .then((value) {
@@ -163,7 +159,6 @@ class _ReportDailyState extends State<ReportDaily> {
                                       .uploadDailyImageReport(
                                           formModel, value['IntReportId'])
                                       .then((value) {
-                                        print("test2");
                                         print("complete2");
                                       });
                                   
@@ -179,7 +174,7 @@ class _ReportDailyState extends State<ReportDaily> {
                 ),
               ]),
         ),
-      ),
+      
     );
   }
 
@@ -255,7 +250,6 @@ class _ReportDailyState extends State<ReportDaily> {
               (newValue) {
             setState(() {
               formModel.setDiscripline(int.parse(newValue));
-              print(formModel.disciplineId);
             });
           }),
           SizedBox(height: 10),
@@ -282,11 +276,11 @@ class _ReportDailyState extends State<ReportDaily> {
                   keyboardType: TextInputType.multiline,
                   onChanged: (String? input) {
                     formModel.setTextData(input!);
-                    print(formModel.textData);
+                    
                   },
                   onSaved: (String? input) {
                     formModel.setTextData(input!);
-                    print(formModel.textData);
+                    
                   },
                   maxLines: 8,
                   minLines: 1,

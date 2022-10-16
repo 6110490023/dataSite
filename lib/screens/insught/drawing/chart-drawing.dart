@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../../../ProgressHUD.dart';
 import '../../../component/chartBar-conponent.dart';
 import '../../../component/chartLine-conponent.dart';
@@ -24,6 +25,13 @@ class _ChartDrawingState extends State<ChartDrawing> {
     lineMaxY: 1000.0,
     error: '',
   );
+  List<DropdownMenuItem<String>> options = [
+    DropdownMenuItem(child: Text("not choose"), value: ""),
+    DropdownMenuItem(child: Text("2022"), value: "2022"),
+    DropdownMenuItem(child: Text("2021"), value: "2021"),
+    DropdownMenuItem(child: Text("2023"), value: "2023"),
+  ];
+  String selectValue = '';
   @override
   void initState() {
     // TODO: implement initState
@@ -31,13 +39,15 @@ class _ChartDrawingState extends State<ChartDrawing> {
     setState(() {
       isApiCallProcess = true;
     });
-    apiService.getDrawingChart(widget.disciplineId).then((value) {
+    selectValue = DateTime.now().year.toString();
+    apiService.getDrawingChart(widget.disciplineId, selectValue).then((value) {
       if (value.error != "") {
         Navigator.pop(context);
         setState(() {
           isApiCallProcess = false;
         });
       }
+
       setState(() {
         charts = value;
         isApiCallProcess = false;
@@ -62,6 +72,60 @@ class _ChartDrawingState extends State<ChartDrawing> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Container(
+                padding: EdgeInsets.fromLTRB(0, 15, 15, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(
+                      height: 30,
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      child: DropdownButtonFormField(
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 1),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 1),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          fillColor: Colors.grey[100],
+                        ),
+                        validator: (value) =>
+                            value == null ? "Select a country" : null,
+                        dropdownColor: Colors.grey[100],
+                        value: selectValue,
+                        onChanged: (newValue) {
+                          setState(() {
+                            isApiCallProcess = true;
+                          });
+                
+                          selectValue = newValue.toString();
+                          apiService
+                              .getDrawingChart(widget.disciplineId, selectValue)
+                              .then((value) {
+                            if (value.error != "") {
+                              Navigator.pop(context);
+                              setState(() {
+                                isApiCallProcess = false;
+                              });
+                            }
+                            setState(() {
+                              charts = value;
+                              isApiCallProcess = false;
+                            });
+                          });
+                        },
+                        items: options,
+                      ),
+                    )
+                  ],
+                ),
+              ),
               const SizedBox(
                 height: 45,
                 child: Center(
@@ -72,7 +136,7 @@ class _ChartDrawingState extends State<ChartDrawing> {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.38,
+                height: MediaQuery.of(context).size.height * 0.35,
                 width: MediaQuery.of(context).size.width * 0.95,
                 child: ChartBar(
                     charts: charts.chartBar,
@@ -89,7 +153,7 @@ class _ChartDrawingState extends State<ChartDrawing> {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.38,
+                height: MediaQuery.of(context).size.height * 0.35,
                 width: MediaQuery.of(context).size.width * 0.95,
                 child: ChartLine(
                     charts: charts.chartLine,

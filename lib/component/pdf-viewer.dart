@@ -24,7 +24,6 @@ bool isApiCallProcess = false;
     super.initState();
     setState(() {
      namePath =  namePath + widget.report.projectGuId.toString() +'/'+ widget.report.intFileId.toString() +'/'+ widget.report.fileRawName;
-      print(namePath);
       isApiCallProcess = false;
     });
     

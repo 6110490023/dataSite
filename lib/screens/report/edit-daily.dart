@@ -7,8 +7,9 @@ import 'package:image_picker/image_picker.dart';
 
 class EditDaily extends StatefulWidget {
   final fromDailyReportModel oldFormModel;
-  final IntReportId;
-  const EditDaily({required this.oldFormModel,required this.IntReportId, Key? key}) : super(key: key);
+  final  IntReportId;
+  final String date;
+  const EditDaily({required this.oldFormModel,required this.IntReportId,required this.date ,Key? key}) : super(key: key);
 
   @override
   State<EditDaily> createState() => _EditDailyState();
@@ -157,7 +158,7 @@ class _EditDailyState extends State<EditDaily> {
                               setState(() {
                                 isApiCallProcess = true;
                               });
-                              print(formModel.disciplineId);
+                             
                               apiService
                                   .upDateDailyReport(formModel,widget.IntReportId)
                                   .then((value) {
@@ -166,7 +167,6 @@ class _EditDailyState extends State<EditDaily> {
                                       .uploadDailyImageReport(
                                           formModel, value['IntReportId'])
                                       .then((value) {
-                                        print("test2");
                                         print("complete2");
                                       });
                                   
@@ -244,7 +244,8 @@ class _EditDailyState extends State<EditDaily> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: Text('${date.day}/${date.month}/${date.year}'),
+                        
+                        child: Text(widget.date),
                       ),
                     ],
                   ),
@@ -258,7 +259,6 @@ class _EditDailyState extends State<EditDaily> {
               (newValue) {
             setState(() {
               formModel.setDiscripline(int.parse(newValue));
-              print(formModel.disciplineId);
             });
           }), 
           SizedBox(height: 10),
@@ -286,11 +286,9 @@ class _EditDailyState extends State<EditDaily> {
                   initialValue: widget.oldFormModel.textData,
                   onChanged: (String? input) {
                     formModel.setTextData(input!);
-                    print(formModel.textData);
                   },
                   onSaved: (String? input) {
                     formModel.setTextData(input!);
-                    print(formModel.textData);
                   },
                   maxLines: 8,
                   minLines: 1,

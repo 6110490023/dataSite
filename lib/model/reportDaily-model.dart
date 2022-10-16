@@ -45,7 +45,6 @@ class ReportDailyModel {
       });
 
   factory ReportDailyModel.formJson(dynamic json) {
-    print(json);
     return ReportDailyModel(
         LocationTypeName: json["LocationTypeName"] ?? '',
         DtCreateDate: json["DtCreateDate"] ?? '',
