@@ -21,15 +21,13 @@ class _ChartDrawingState extends State<ChartDrawing> {
   ChartDrawingResponseModel charts = ChartDrawingResponseModel(
     chartBar: [ChartModel(actual: 0, label: 0, plan: 0, disciplineName: "")],
     chartLine: [ChartModel(actual: 0, label: 0, plan: 0, disciplineName: "")],
+    listYear: [],
     barMaxY: 1000.0,
     lineMaxY: 1000.0,
     error: '',
   );
   List<DropdownMenuItem<String>> options = [
     DropdownMenuItem(child: Text("not choose"), value: ""),
-    DropdownMenuItem(child: Text("2022"), value: "2022"),
-    DropdownMenuItem(child: Text("2021"), value: "2021"),
-    DropdownMenuItem(child: Text("2023"), value: "2023"),
   ];
   String selectValue = '';
   @override
@@ -39,8 +37,9 @@ class _ChartDrawingState extends State<ChartDrawing> {
     setState(() {
       isApiCallProcess = true;
     });
-    selectValue = DateTime.now().year.toString();
+    // selectValue = 
     apiService.getDrawingChart(widget.disciplineId, selectValue).then((value) {
+      print(value.chartLine[0].actual);
       if (value.error != "") {
         Navigator.pop(context);
         setState(() {
@@ -50,6 +49,13 @@ class _ChartDrawingState extends State<ChartDrawing> {
 
       setState(() {
         charts = value;
+        if (value.listYear.length >0){
+          for (final year in value.listYear) {
+          options.add(DropdownMenuItem(
+              value: year.toString(), child: Text(year.toString())));
+        }
+        selectValue = value.listYear[0].toString();
+        }
         isApiCallProcess = false;
       });
     });
@@ -61,6 +67,7 @@ class _ChartDrawingState extends State<ChartDrawing> {
   }
 
   Widget _uiSetup(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Insight :  Drawing'),

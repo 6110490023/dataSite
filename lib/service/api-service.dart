@@ -20,6 +20,7 @@ import 'package:http_parser/http_parser.dart';
 class APIService {
 //ต้องมาเเก้ domain
   String baseUrl = 'https://m.integreata.com';
+  //String baseUrl = 'http://192.168.1.133:3000';
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 //-------------------------------------------------------------------
 //api เสร๋จเเล้ว
@@ -139,13 +140,14 @@ class APIService {
     }
   }
 
-  Future<ChartDrawingResponseModel> getDrawingChart(int disciplineId,String year) async {
+  Future<ChartDrawingResponseModel> getDrawingChart(
+      int disciplineId, String year) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     int projectId = preferences.getInt('projectId') ?? -1;
     var url = Uri.parse('$baseUrl/drawing-chart');
-    print('test:'+year);
-    var jsonData =
-        jsonEncode({'projectId': projectId, 'disciplineId': disciplineId});
+
+    var jsonData = jsonEncode(
+        {'projectId': projectId, 'disciplineId': disciplineId, 'year': year});
     try {
       final response = await http
           .post(url,
@@ -158,7 +160,9 @@ class APIService {
       );
       if (response.statusCode == 200 || response.statusCode == 400) {
         Map<String, dynamic> datatest = json.decode(response.body);
-
+        print('test');
+        print(datatest);
+        print('tests');
         return ChartDrawingResponseModel.fromJson(datatest);
       } else if (response.statusCode == 408) {
         return ChartDrawingResponseModel.fromJson({"erorr": "Time out"});
@@ -224,7 +228,6 @@ class APIService {
     }
   }
 
-
   Future<Map<String, dynamic>> uploadDailyReport(
       fromDailyReportModel formData) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -259,7 +262,7 @@ class APIService {
   }
 
   Future<bool> uploadDailyImageReport(
-    fromDailyReportModel formData, int IntReportId) async {
+      fromDailyReportModel formData, int IntReportId) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     int projectId = preferences.getInt('projectId') ?? -1;
     String ProjectGuId = preferences.getString('ProjectGuId') ?? '';
@@ -286,7 +289,8 @@ class APIService {
     }
   }
 
-    Future<Map<String, dynamic>> upDateDailyReport(fromDailyReportModel formData,int IntReportId) async {
+  Future<Map<String, dynamic>> upDateDailyReport(
+      fromDailyReportModel formData, int IntReportId) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     //int projectId = preferences.getInt('projectId') ?? -1;
     int IntMemberId = preferences.getInt('memberId') ?? -1;
@@ -318,7 +322,6 @@ class APIService {
       throw Exception('Failed to load data!');
     }
   }
-
 
 //----------------------------------------------------------- --------
 //api ด้านล่าคือยังไม่เสร็จ

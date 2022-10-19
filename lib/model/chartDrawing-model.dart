@@ -24,6 +24,7 @@ Request to web
 import 'chart-model.dart';
 
 class ChartDrawingResponseModel {
+  final List listYear;
   final List<ChartModel> chartBar;
   final List<ChartModel> chartLine;
   final double lineMaxY;
@@ -33,6 +34,7 @@ class ChartDrawingResponseModel {
   ChartDrawingResponseModel(
       {required this.chartBar,
       required this.chartLine,
+      required this.listYear,
       required this.error,
       required this.lineMaxY,
       required this.barMaxY});
@@ -66,10 +68,13 @@ class ChartDrawingResponseModel {
         _chartBar.add(chartModel);
       });
     }
+    print(json["listYear"]);
+    List _listYear = json["listYear"];
 
     return ChartDrawingResponseModel(
       chartLine: _chartLine,
       chartBar: _chartBar,
+      listYear: _listYear,
       lineMaxY: _lineMaxY*1.1,
       barMaxY: _barMaxY*1.1,
       error: json["error"] != null ? json["error"] : "",

@@ -11,7 +11,6 @@ class TableDrawingResponseModel {
     List<ReportModel> _table = [];
     if (json["table"] != null) {
       json["table"].forEach((report) {
-        print(report);
         ReportModel reportModel = ReportModel.formJson(report);
         _table.add(reportModel);
       });

@@ -19,7 +19,7 @@ class ChartLine extends StatefulWidget {
 
 class _ChartLineState extends State<ChartLine> {
   double maxX = 0;
-  double maxY = 0;
+  double maxY = 1;
   double minX = 0;
   List<FlSpot> listLineOne = <FlSpot>[];
   List<FlSpot> listLineTwo = <FlSpot>[];
@@ -47,7 +47,7 @@ class _ChartLineState extends State<ChartLine> {
     return LineChart(
       LineChartData(
         maxX: maxX,
-        maxY: maxY,
+        maxY: maxY+1,
         minX: minX,
         minY: 0,
         titlesData: FlTitlesData(
